@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.WebSockets;
 
 namespace C_Chat_API.Controllers
@@ -9,6 +8,7 @@ namespace C_Chat_API.Controllers
     public class WebSocketController : ControllerBase
     {
         [Route("/ws")]
+        [HttpGet]
         public async Task Get()
         {
             if (HttpContext.WebSockets.IsWebSocketRequest)
@@ -22,6 +22,7 @@ namespace C_Chat_API.Controllers
             }
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         private async Task ProcessWebSocket(WebSocket webSocket)
         {
             byte[] buffer = new byte[1024 * 4];

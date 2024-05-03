@@ -1,0 +1,32 @@
+<dialog>
+  <form>
+    <b>Nombre</b>
+    <input
+      type="text"
+      [(ngModel)]="userData.userName"
+      name="userName"
+      placeholder="User name"
+    />
+    <b>Correo Electrónico</b>
+    <input
+      type="email"
+      [(ngModel)]="userData.email"
+      name="email"
+      placeholder="Email"
+    />
+    <b>Contraseña</b>
+    <input
+      type="password"
+      [(ngModel)]="userData.password"
+      name="password"
+      placeholder="Password"
+    />
+    <b>Repite Contraseña</b>
+    <input
+      type="password"
+      [(ngModel)]="userData.passwordBis"
+      name="passwordBis"
+      placeholder="Repeat password"
+    />
+  </form>
+</dialog>

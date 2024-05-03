@@ -28,6 +28,8 @@ namespace C_Chat_API.Controllers
             _dbContext = dbContext;
         }
 
+        /* ---------- GET ---------- */
+
         [HttpGet]
         public ActionResult<IEnumerable<UserDto>> GetUsers()
         {
@@ -49,6 +51,8 @@ namespace C_Chat_API.Controllers
             }
             return response;
         }
+
+        /* ---------- POST ---------- */
 
         [HttpPost("SignUp")]
         [Consumes("multipart/form-data")]
@@ -98,46 +102,6 @@ namespace C_Chat_API.Controllers
             return response;
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteUser()
-        {
-            IActionResult response;
-            try
-            {
-                string? userIdstr = User?.FindFirst("id")?.Value;
-                if (userIdstr == null)
-                {
-                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
-                }
-                else
-                {
-                    int userId = Int32.Parse(userIdstr);
-                    User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
-
-                    if (user == null)
-                    {
-                        response = NotFound(Messages.User.NotFound);
-                    }
-                    else
-                    {
-                        _dbContext.Users.Remove(user);
-                        await _dbContext.SaveChangesAsync();
-                        response = Ok(Messages.User.Deleted);
-                    }
-                }
-                
-            }
-            catch (FormatException ex)
-            {
-                response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
-            }
-            catch (DbUpdateException ex)
-            {
-                response = BadRequest(ex.Message);
-            }
-            return response;
-        }
-
         [HttpPost("Login")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> PostLogin([FromForm] UserLogin IncomingLoginUser)
@@ -176,6 +140,48 @@ namespace C_Chat_API.Controllers
 
                     response = Ok(stringToken);
                 }
+            }
+            return response;
+        }
+
+        /* ---------- DELETE ---------- */
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteUser()
+        {
+            IActionResult response;
+            try
+            {
+                string? userIdstr = User?.FindFirst("id")?.Value;
+                if (userIdstr == null)
+                {
+                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                }
+                else
+                {
+                    int userId = Int32.Parse(userIdstr);
+                    User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+
+                    if (user == null)
+                    {
+                        response = NotFound(Messages.User.NotFound);
+                    }
+                    else
+                    {
+                        _dbContext.Users.Remove(user);
+                        await _dbContext.SaveChangesAsync();
+                        response = Ok(Messages.User.Deleted);
+                    }
+                }
+                
+            }
+            catch (FormatException)
+            {
+                response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+            }
+            catch (DbUpdateException ex)
+            {
+                response = BadRequest(ex.Message);
             }
             return response;
         }

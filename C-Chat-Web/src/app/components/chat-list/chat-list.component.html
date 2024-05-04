@@ -1,6 +1,15 @@
-<h1>Chat list</h1>
-<ul>
-  @for (chat of chatList; track chat.chatId) {
-    <li>Name: {{ chat.name }}, Creation date: {{ chat.creationDate }}</li>
-  }
-</ul>
+<div id="list-container">
+  <h2>
+    Chats
+    <hr>
+  </h2>
+  <ul>
+    @for (chat of chatList; track chat.chatId) {
+      <li (click)="selectChat(chat)">{{ chat.name }}</li>
+    }
+  </ul>
+  <button id="btn-new-chat" (click)="toggleNewChatForm(true)">New chat</button>
+</div>
+<dialog id="dialog-new-chat">
+  <app-create-chat-form (closeDialog)="toggleNewChatForm(false)" />
+</dialog>

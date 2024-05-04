@@ -1,14 +1,21 @@
-dialog[open] {
-  display: flex;
-  flex-direction: column;
+#main-container {
+  display: grid;
+  grid-template:
+    [header-left] "head head" [header-right]
+    [main-left] "list  chat" 1fr [main-right]
+    / 20vw 1fr;
+
+  gap: 1em;
 }
-dialog::backdrop {
-  background-image: linear-gradient(
-    45deg,
-    magenta,
-    rebeccapurple,
-    dodgerblue,
-    green
-  );
-  opacity: 0.75;
+
+app-header-menu {
+  grid-area: head;
+}
+
+app-chat-list {
+  grid-area: list;
+}
+
+app-chat-area {
+  grid-area: chat;
 }

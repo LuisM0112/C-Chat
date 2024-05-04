@@ -1,0 +1,25 @@
+#list-container {
+  background-color: rgba(110, 110, 110, 0.336);
+  padding: 5px;
+  border-radius: 8px;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  gap: 1em;
+}
+
+li {
+  background-color: rgba(110, 110, 110, 0.336);
+  padding: 5px;
+  border-radius: 8px;
+  transition: 150ms;
+  cursor: pointer;
+}
+
+li:hover {
+  filter: brightness(200%);
+}

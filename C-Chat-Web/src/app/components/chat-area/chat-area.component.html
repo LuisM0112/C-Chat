@@ -1,0 +1,8 @@
+<div id="chat-area-container">
+  <h3>{{selectedChat ? '> '+selectedChat.name : '✕ Chat not selected'}}</h3>
+  <div id="chat-container"></div>
+  <div id="input-container">
+    <input type="text" [(ngModel)]="inputText" placeholder="⌨️ Type here...">
+    <button>Send</button>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+#chat-area-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(110, 110, 110, 0.336);
+  border-radius: 8px;
+}
+
+#chat-container {
+  width: 100%;
+  height: 100%;
+}
+
+h3 {
+  margin: 0;
+  padding: 5px;
+  border-radius: 8px 8px 0 0;
+  background-color: rgba(110, 110, 110, 0.377);
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: hidden;
+  border-radius: 0 0 0 8px;
+  background-color: rgba(110, 110, 110, 0.377);
+}
+
+#input-container {
+  display: flex;
+}

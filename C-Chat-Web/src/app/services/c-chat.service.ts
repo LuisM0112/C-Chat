@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom, map } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, map } from 'rxjs';
 import { Chat } from '../model/classes/chat';
 
 @Injectable({
@@ -11,11 +11,18 @@ export class CChatService {
   TOKEN_ITEM: string = 'C-ChatToken';
   isUserLogged: boolean = localStorage.getItem(this.TOKEN_ITEM) ? true : false;
 
+  private chatCreatedSource = new BehaviorSubject<boolean>(false);
+  chatCreated$ = this.chatCreatedSource.asObservable();
+
+  private _selectedChat: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  selectedChat = this._selectedChat.asObservable();
+
   constructor(private httpClient: HttpClient) { }
 
-  /**
-   * test
-   */
+  public setSelectedChat(chat: Chat): void {
+    this._selectedChat.next(chat);
+  }
+
   public test(): void {
     console.log(localStorage.getItem(this.TOKEN_ITEM))
   }
@@ -97,5 +104,42 @@ export class CChatService {
       name: item.name,
       creationDate: item.creationDate
     }
+  }
+
+  public async postCreateChat(chatName: string): Promise<string> {
+    const token = localStorage.getItem(this.TOKEN_ITEM);
+
+    const formData = new FormData();
+    formData.append('Name', chatName);
+
+    const headers = new HttpHeaders({
+      Accept: 'text/html, application/xhtml+xml, */*',
+        Authorization: `Bearer ${token}`
+    });
+
+    const options: any = {
+      headers,
+      responseType: 'text',
+    };
+
+    try {
+      const request = this.httpClient.post<string>(`${this.API_URL}/Chat`, formData, options)
+        .pipe(map((response) => {
+          if (typeof response === 'string') {
+            return response;
+          } else {
+            throw new Error('Response is not a string');
+          }
+        }));
+      
+      return await lastValueFrom(request);
+
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public chatCreated(): void {
+    this.chatCreatedSource.next(true);
   }
 }

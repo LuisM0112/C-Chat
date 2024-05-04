@@ -73,7 +73,9 @@ namespace C_Chat_API.Controllers
                             .Select(uc => uc.Chat)
                             .ToListAsync();
 
-                        response = Ok(chats);
+                        var chatDtos = chats.Select(ChatDto.ToDto);
+
+                        response = Ok(chatDtos);
                     }
                 }
             }

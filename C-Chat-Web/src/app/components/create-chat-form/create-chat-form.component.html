@@ -1,1 +1,6 @@
-<p>create-chat-form works!</p>
+<form>
+  <b>Name</b>
+  <input type="text" [(ngModel)]="chatName" name="chatName" placeholder="Chat name">
+  <button (click)="createChat()">Confirm</button>
+  <button (click)="closeForm()">Cancel</button>
+</form>

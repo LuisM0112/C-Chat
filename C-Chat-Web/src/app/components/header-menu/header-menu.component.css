@@ -1,0 +1,10 @@
+#menu-container {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+
+#app-icon {
+  width: 50px;
+  height: auto;
+}

@@ -1,3 +1,6 @@
-
-<router-outlet />
-<app-main-view />
+@if (!cchatservice.isUserLogged) {
+  <app-auth-view />
+} @else {
+  <app-main-view />
+}
+<!-- <router-outlet /> -->

@@ -1,0 +1,6 @@
+<h1>Chat list</h1>
+<ul>
+  @for (chat of chatList; track chat.chatId) {
+    <li>Name: {{ chat.name }}, Creation date: {{ chat.creationDate }}</li>
+  }
+</ul>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CChatService } from '../../services/c-chat.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -16,4 +17,15 @@ export class SignUpComponent {
     password: '',
     passwordBis: ''
   };
+
+  constructor(public cchatService: CChatService){}
+
+  public async signUp(): Promise<void> {
+    try {
+      const response = await this.cchatService.postSignUp(this.userData);
+      console.log(response);
+    } catch (error) {
+      console.error('Error: ', error);
+    }
+  }
 }

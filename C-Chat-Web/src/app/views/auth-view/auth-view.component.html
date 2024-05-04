@@ -1,0 +1,8 @@
+<dialog open>
+  @if (showSignUpDialog) {
+    <app-sign-up />
+  } @else {
+    <app-log-in />
+  }
+  <p id="toggleDialogText" (click)="toggleDialog()">{{showSignUpDialog ? "I already have an account" : "I don't have an account"}}, <u>{{showSignUpDialog ? "log in" : "sign up"}}</u></p>
+</dialog>

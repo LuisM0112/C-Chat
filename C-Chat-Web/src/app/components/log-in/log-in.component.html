@@ -1,1 +1,21 @@
-<p>log-in works!</p>
+<form>
+  <h2>
+    Log in
+    <hr>
+  </h2>
+  <b>Email</b>
+  <input
+    type="email"
+    [(ngModel)]="userData.email"
+    name="email"
+    placeholder="Email"
+  />
+  <b>Password</b>
+  <input
+    type="password"
+    [(ngModel)]="userData.password"
+    name="password"
+    placeholder="Password"
+  />
+  <button (click)="logIn()">Log in</button>
+</form>

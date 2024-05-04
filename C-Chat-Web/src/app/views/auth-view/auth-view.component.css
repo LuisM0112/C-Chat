@@ -1,0 +1,9 @@
+#toggleDialogText {
+  cursor: pointer;
+  u {
+    color: cornflowerblue;
+  }
+}
+#toggleDialogText:hover u {
+  color: aqua;
+}

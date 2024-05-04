@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+:root {
+  color-scheme: light dark;
+  font-family: "Fira Code", monospace;
+}
+
+button {
+  cursor: pointer;
+}

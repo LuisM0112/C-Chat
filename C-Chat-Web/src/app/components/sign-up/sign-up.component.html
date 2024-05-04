@@ -1,32 +1,35 @@
-<dialog>
-  <form>
-    <b>Nombre</b>
-    <input
-      type="text"
-      [(ngModel)]="userData.userName"
-      name="userName"
-      placeholder="User name"
-    />
-    <b>Correo Electrónico</b>
-    <input
-      type="email"
-      [(ngModel)]="userData.email"
-      name="email"
-      placeholder="Email"
-    />
-    <b>Contraseña</b>
-    <input
-      type="password"
-      [(ngModel)]="userData.password"
-      name="password"
-      placeholder="Password"
-    />
-    <b>Repite Contraseña</b>
-    <input
-      type="password"
-      [(ngModel)]="userData.passwordBis"
-      name="passwordBis"
-      placeholder="Repeat password"
-    />
-  </form>
-</dialog>
+<form>
+  <h2>
+    Sign up
+    <hr>
+  </h2>
+  <b>Name</b>
+  <input
+    type="text"
+    [(ngModel)]="userData.userName"
+    name="userName"
+    placeholder="User name"
+  />
+  <b>Email</b>
+  <input
+    type="email"
+    [(ngModel)]="userData.email"
+    name="email"
+    placeholder="Email"
+  />
+  <b>Password</b>
+  <input
+    type="password"
+    [(ngModel)]="userData.password"
+    name="password"
+    placeholder="Password"
+  />
+  <b>Repeat password</b>
+  <input
+    type="password"
+    [(ngModel)]="userData.passwordBis"
+    name="passwordBis"
+    placeholder="Repeat password"
+  />
+  <button (click)="signUp()">Sign Up</button>
+</form>

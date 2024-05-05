@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, lastValueFrom, map } from 'rxjs';
 import { Chat } from '../model/classes/chat';
+import { UserChatInsert } from '../model/classes/user-chat-insert';
 
 @Injectable({
   providedIn: 'root'
@@ -141,5 +142,45 @@ export class CChatService {
 
   public chatCreated(): void {
     this.chatCreatedSource.next(true);
+  }
+
+  public async postAddUserToChat(userToAdd: UserChatInsert): Promise<string> {
+    const token = localStorage.getItem(this.TOKEN_ITEM);
+
+    const formData = new FormData();
+    formData.append('ChatId', userToAdd.chatId);
+    formData.append('Name', userToAdd.userName);
+
+    const headers = new HttpHeaders({
+      Accept: 'text/html, application/xhtml+xml, */*',
+        Authorization: `Bearer ${token}`
+    });
+
+    const options: any = {
+      headers,
+      responseType: 'text',
+    };
+
+    try {
+      const request = this.httpClient.post<string>(`${this.API_URL}/Chat/AddUserToChat`, formData, options)
+        .pipe(map((response) => {
+          if (typeof response === 'string') {
+            return response;
+          } else {
+            throw new Error('Response is not a string');
+          }
+        }));
+      
+      return await lastValueFrom(request);
+
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /* ---------- Utility ---------- */
+  public toggleModalForm(selector: string, open: boolean): void {
+    const dialog = document.getElementById(selector) as HTMLDialogElement;
+    open ? dialog.showModal() : dialog.close();
   }
 }

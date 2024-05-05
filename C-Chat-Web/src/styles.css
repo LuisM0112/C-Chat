@@ -27,3 +27,9 @@ dialog::backdrop {
   );
   opacity: 0.75;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}

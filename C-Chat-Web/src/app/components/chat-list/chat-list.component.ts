@@ -28,11 +28,6 @@ export class ChatListComponent implements OnInit {
     this.chatList = await this.cchatService.getUserChatList();
   }
 
-  public toggleNewChatForm(open: boolean): void {
-    const dialog = document.getElementById("dialog-new-chat") as HTMLDialogElement;
-    open ? dialog.showModal() : dialog.close();
-  }
-
   public selectChat(chat: Chat) {
     this.cchatService.setSelectedChat(chat);
   }

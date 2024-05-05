@@ -1,8 +1,16 @@
 <div id="chat-area-container">
-  <h3>{{selectedChat ? '> '+selectedChat.name : '✕ Chat not selected'}}</h3>
+  <h3>
+    {{selectedChat ? '> '+selectedChat.name : '✕ Chat not selected'}}
+    @if (selectedChat) {
+      <button id="btn-add-user" (click)="cchatService.toggleModalForm('dialog-add-user', true)">Add user</button>
+    }
+  </h3>
   <div id="chat-container"></div>
   <div id="input-container">
     <input type="text" [(ngModel)]="inputText" placeholder="⌨️ Type here...">
     <button>Send</button>
   </div>
 </div>
+<dialog id="dialog-add-user">
+  <app-add-user-form (closeDialog)="cchatService.toggleModalForm('dialog-add-user', false)" />
+</dialog>

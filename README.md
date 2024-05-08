@@ -1,7 +1,7 @@
 <h1 align="center">C-Chat</h1>
 
 <p align="center">
-  <img src="images/C-Chat_Icon.png" alt="C-Chat-logo" width="120px" height="120px"/>
+  <img src="images/C-Chat_Icon.png" alt="C-Chat-logo" width="120px" height="120px" />
   <br>
   <em>Aplicación de mensajería similar a WhatsApp o Discord
     <br> Hecho con C# y Typescript</em>
@@ -13,11 +13,23 @@
   <br>
 </p>
 
----
-### Autor
-![Foto LuisM0112](https://github.com/LuisM0112.png?size=150)
+<h2 align="center">Autor</h2>
+<p align="center">
+  <img src="https://github.com/LuisM0112.png?size=150" alt="autor" /><br>
+  Luis Miguel García Sevilla - 2º DAM Tarde
+</p>
 
-Luis Miguel García Sevilla - 2º DAM Tarde
+---
+
+<h2 align="center">
+  Diagrama de la base de datos
+  <img src="images/C-Chat_DBD.png" alt="Diagrama-base-de-datos" />
+</h2>
+
+<h2 align="center">
+  Diagrama de flujo de la app
+  <img src="images/C-Chat_Flowchart.png" alt="Diagrama-de-flujo-de-la-app" />
+</h2>
 
 # Historico
 - 3 de abril de 2024: Creación del repositorio.

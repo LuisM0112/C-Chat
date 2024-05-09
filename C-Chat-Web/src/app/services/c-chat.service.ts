@@ -8,8 +8,8 @@ import { UserChatInsert } from '../model/classes/user-chat-insert';
   providedIn: 'root'
 })
 export class CChatService {
-  API_URL: string = 'https://localhost:7201/api';
-  TOKEN_ITEM: string = 'C-ChatToken';
+  private API_URL: string = 'https://localhost:7201/api';
+  private TOKEN_ITEM: string = 'C-ChatToken';
   isUserLogged: boolean = localStorage.getItem(this.TOKEN_ITEM) ? true : false;
 
   private chatCreatedSource = new BehaviorSubject<boolean>(false);
@@ -17,6 +17,9 @@ export class CChatService {
 
   private _selectedChat: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   selectedChat = this._selectedChat.asObservable();
+
+  private _chats: BehaviorSubject<Chat[]> = new BehaviorSubject<Chat[]>([]);
+  chats$ = this._chats.asObservable();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -89,14 +92,15 @@ export class CChatService {
     localStorage.removeItem(this.TOKEN_ITEM)
   }
 
-  public async getUserChatList(): Promise<Chat[]> {
+  public async getUserChatList(): Promise<void> {
     const token = localStorage.getItem(this.TOKEN_ITEM);
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const request = this.httpClient.get(`${this.API_URL}/Chat/MyChats`, { headers }).pipe(
       map((response: any) => response.map(this.mapToChat))
     );
-
-    return await lastValueFrom(request);
+    
+    const chats: Chat[] = await lastValueFrom(request);
+    this._chats.next(chats);
   }
 
   private mapToChat(item: any): Chat {
@@ -107,41 +111,30 @@ export class CChatService {
     }
   }
 
-  public async postCreateChat(chatName: string): Promise<string> {
+  public async postCreateChat(chatName: string): Promise<void> {
     const token = localStorage.getItem(this.TOKEN_ITEM);
 
     const formData = new FormData();
     formData.append('Name', chatName);
 
-    const headers = new HttpHeaders({
-      Accept: 'text/html, application/xhtml+xml, */*',
-        Authorization: `Bearer ${token}`
-    });
-
     const options: any = {
-      headers,
+      headers: new HttpHeaders({
+        Accept: 'text/html, application/xhtml+xml, */*',
+        Authorization: `Bearer ${token}`
+      }),
       responseType: 'text',
     };
 
     try {
-      const request = this.httpClient.post<string>(`${this.API_URL}/Chat`, formData, options)
-        .pipe(map((response) => {
-          if (typeof response === 'string') {
-            return response;
-          } else {
-            throw new Error('Response is not a string');
-          }
-        }));
-      
-      return await lastValueFrom(request);
+      const request = this.httpClient.post<string>(`${this.API_URL}/Chat`, formData, options);
+      await lastValueFrom(request);
+      await this.getUserChatList();
+
+      this.chatCreatedSource.next(true);
 
     } catch (error) {
       throw error;
     }
-  }
-
-  public chatCreated(): void {
-    this.chatCreatedSource.next(true);
   }
 
   public async postAddUserToChat(userToAdd: UserChatInsert): Promise<string> {
@@ -149,11 +142,15 @@ export class CChatService {
 
     const formData = new FormData();
     formData.append('ChatId', userToAdd.chatId);
-    formData.append('Name', userToAdd.userName);
+    formData.append('UserName', userToAdd.userName);
+    console.log(userToAdd.chatId);
+    console.log(userToAdd.userName);
+    
+    
 
     const headers = new HttpHeaders({
       Accept: 'text/html, application/xhtml+xml, */*',
-        Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     });
 
     const options: any = {

@@ -17,16 +17,13 @@ export class ChatListComponent implements OnInit {
   constructor(public cchatService: CChatService) {}
   
   public ngOnInit(): void {
-    this.getChatList();
-
-    this.cchatService.chatCreated$.subscribe(() => {
-      this.getChatList();
+    this.cchatService.chats$.subscribe(chats => {
+      this.chatList = chats;
     });
+
+    this.cchatService.getUserChatList();
   }
 
-  public async getChatList(): Promise<void> {
-    this.chatList = await this.cchatService.getUserChatList();
-  }
 
   public selectChat(chat: Chat) {
     this.cchatService.setSelectedChat(chat);

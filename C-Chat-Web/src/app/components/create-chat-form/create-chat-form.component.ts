@@ -20,7 +20,6 @@ export class CreateChatFormComponent {
   public async createChat(): Promise<void> {
     try {
       await this.cchatService.postCreateChat(this.chatName);
-      this.cchatService.chatCreated();
       this.closeForm();
     } catch (error) {
       console.error('Error: ', error);

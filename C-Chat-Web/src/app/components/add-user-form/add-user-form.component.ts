@@ -35,7 +35,6 @@ export class AddUserFormComponent {
         this.userName
       );
       await this.cchatService.postAddUserToChat(userToAdd);
-      // this.cchatService.chatCreated();
       this.closeForm();
     } catch (error) {
       console.error('Error: ', error);

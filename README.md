@@ -61,6 +61,10 @@
   - Distribución de los componentes en la interfaz con grid layout.
   - Chats seleccionables.
   - Estilos básicos.
+- 5 de mayo de 2024 (Frontend): Formulario para añadir usuarios al chat.
+- 8 de mayo de 2024: Actualización del Readme.
+- 9 de mayo de 2024: Arreglos al añadir un usuario al chat y actualización del Readme.
+
 ---
 # C-Chat-Web
 

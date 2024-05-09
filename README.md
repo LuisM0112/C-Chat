@@ -10,7 +10,9 @@
 
 <p align="center">
   <a href="https://aromatic-tray-733.notion.site/Anteproyecto-C-Chat-0ca065f5e301446fb2b774a35fcd57ec?pvs=4"><strong>Anteproyecto</strong></a>
-  <br>
+  <br><br>
+  <strong>Vídeo checkpoint</strong><br>
+  <a href="https://youtu.be/orXuOVBVp4I"><img src="https://img.youtube.com/vi/orXuOVBVp4I/hqdefault.jpg" /></a>
 </p>
 
 <h2 align="center">Autor</h2>
@@ -62,7 +64,7 @@
 ---
 # C-Chat-Web
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.1.
+Ptoyecto creado con [Angular CLI](https://github.com/angular/angular-cli) versión 17.1.1.
 
 ## Servidor de desarrollo
 

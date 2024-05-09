@@ -22,13 +22,17 @@
 ---
 
 <h2 align="center">
+  Boceto de la vista principal
+  <img src="images/C-Chat_sketch.webp" alt="Boceto-vista-principal" />
+</h2>
+<h2 align="center">
   Diagrama de la base de datos
-  <img src="images/C-Chat_DBD.png" alt="Diagrama-base-de-datos" />
+  <img src="images/C-Chat_DBD.webp" alt="Diagrama-base-de-datos" />
 </h2>
 
 <h2 align="center">
   Diagrama de flujo de la app
-  <img src="images/C-Chat_Flowchart.png" alt="Diagrama-de-flujo-de-la-app" />
+  <img src="images/C-Chat_Flowchart.webp" alt="Diagrama-de-flujo-de-la-app" />
 </h2>
 
 # Historico

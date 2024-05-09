@@ -143,18 +143,12 @@ export class CChatService {
     const formData = new FormData();
     formData.append('ChatId', userToAdd.chatId);
     formData.append('UserName', userToAdd.userName);
-    console.log(userToAdd.chatId);
-    console.log(userToAdd.userName);
-    
-    
-
-    const headers = new HttpHeaders({
-      Accept: 'text/html, application/xhtml+xml, */*',
-      Authorization: `Bearer ${token}`
-    });
 
     const options: any = {
-      headers,
+      headers: new HttpHeaders({
+        Accept: 'text/html, application/xhtml+xml, */*',
+        Authorization: `Bearer ${token}`
+      }),
       responseType: 'text',
     };
 

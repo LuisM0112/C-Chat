@@ -27,7 +27,7 @@ export class CreateChatFormComponent {
   }
 
   public closeForm(): void {
-    this.chatName = ''
+    this.chatName = '';
     this.closeDialog.emit();
   }
 }

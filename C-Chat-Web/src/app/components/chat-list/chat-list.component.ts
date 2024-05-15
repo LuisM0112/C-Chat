@@ -1,31 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EffectRef, OnDestroy, OnInit, effect } from '@angular/core';
 import { Chat } from '../../model/classes/chat';
 import { CChatService } from '../../services/c-chat.service';
 import { CreateChatFormComponent } from "../create-chat-form/create-chat-form.component";
+import { SearchBarComponent } from "../search-bar/search-bar.component";
 
 @Component({
     selector: 'app-chat-list',
     standalone: true,
     templateUrl: './chat-list.component.html',
     styleUrl: './chat-list.component.css',
-    imports: [CreateChatFormComponent]
+    imports: [CreateChatFormComponent, SearchBarComponent]
 })
-export class ChatListComponent implements OnInit {
+export class ChatListComponent implements OnInit, OnDestroy {
 
-  chatList: Chat[] = []
+  private effectRef: EffectRef;
+  protected chatList: Chat[] = []
+  private filter: string = '';
 
-  constructor(public cchatService: CChatService) {}
+  constructor(public cchatService: CChatService) {
+    this.effectRef = effect(() => {
+      this.chatList = cchatService.chatList();
+    });
+  }
   
   public ngOnInit(): void {
-    this.cchatService.chats$.subscribe(chats => {
-      this.chatList = chats;
-    });
-
     this.cchatService.getUserChatList();
   }
 
+  getChatListFiltered(): Chat[] {
+    return this.filter ? this.chatList.filter(chat => chat.name.toLowerCase().includes(this.filter)) : this.chatList;
+  }
+
+  public updateFilter(event: string): void {
+    this.filter = event;    
+  }
 
   public selectChat(chat: Chat) {
-    this.cchatService.setSelectedChat(chat);
+    this.cchatService.selectedChat.set(chat);
+    this.cchatService.getUsersInChat();
+  }
+  public ngOnDestroy(): void {
+    this.effectRef.destroy();
   }
 }

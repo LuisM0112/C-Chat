@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, lastValueFrom, map } from 'rxjs';
+import { Injectable, WritableSignal, signal } from '@angular/core';
+import { lastValueFrom, map } from 'rxjs';
 import { Chat } from '../model/classes/chat';
 import { UserChatInsert } from '../model/classes/user-chat-insert';
+import { User } from '../model/classes/user';
 
 @Injectable({
   providedIn: 'root'
@@ -10,26 +11,14 @@ import { UserChatInsert } from '../model/classes/user-chat-insert';
 export class CChatService {
   private API_URL: string = 'https://localhost:7201/api';
   private TOKEN_ITEM: string = 'C-ChatToken';
+
   isUserLogged: boolean = localStorage.getItem(this.TOKEN_ITEM) ? true : false;
 
-  private chatCreatedSource = new BehaviorSubject<boolean>(false);
-  chatCreated$ = this.chatCreatedSource.asObservable();
-
-  private _selectedChat: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  selectedChat = this._selectedChat.asObservable();
-
-  private _chats: BehaviorSubject<Chat[]> = new BehaviorSubject<Chat[]>([]);
-  chats$ = this._chats.asObservable();
+  chatList: WritableSignal<Chat[]> = signal([]);
+  selectedChat: WritableSignal<Chat> = signal(new Chat);
+  memberList: WritableSignal<User[]> = signal([]);
 
   constructor(private httpClient: HttpClient) { }
-
-  public setSelectedChat(chat: Chat): void {
-    this._selectedChat.next(chat);
-  }
-
-  public test(): void {
-    console.log(localStorage.getItem(this.TOKEN_ITEM))
-  }
 
   public async postSignUp(userData: any): Promise<string> {
     const formData = new FormData();
@@ -92,6 +81,26 @@ export class CChatService {
     localStorage.removeItem(this.TOKEN_ITEM)
   }
 
+  public async deleteUser(): Promise<void> {
+    const token = localStorage.getItem(this.TOKEN_ITEM);
+
+    const options: any = {
+      headers: new HttpHeaders({
+        Accept: 'text/html, application/xhtml+xml, */*',
+        Authorization: `Bearer ${token}`
+      }),
+      responseType: 'text',
+    };
+
+    try {
+      const request = this.httpClient.delete<string>(`${this.API_URL}/Auth`, options);
+      await lastValueFrom(request);
+      this.logOut();
+    } catch (error) {
+      throw error;
+    }
+  }
+
   public async getUserChatList(): Promise<void> {
     const token = localStorage.getItem(this.TOKEN_ITEM);
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -100,7 +109,8 @@ export class CChatService {
     );
     
     const chats: Chat[] = await lastValueFrom(request);
-    this._chats.next(chats);
+
+    this.chatList.set(chats);
   }
 
   private mapToChat(item: any): Chat {
@@ -129,9 +139,6 @@ export class CChatService {
       const request = this.httpClient.post<string>(`${this.API_URL}/Chat`, formData, options);
       await lastValueFrom(request);
       await this.getUserChatList();
-
-      this.chatCreatedSource.next(true);
-
     } catch (error) {
       throw error;
     }
@@ -166,6 +173,66 @@ export class CChatService {
 
     } catch (error) {
       throw error;
+    }
+  }
+
+  public async deleteLeaveChat(): Promise<void> {
+
+    const chatId = this.selectedChat().chatId;
+    const token = localStorage.getItem(this.TOKEN_ITEM);
+
+    const options: any = {
+      headers: new HttpHeaders({
+        Accept: 'text/html, application/xhtml+xml, */*',
+        Authorization: `Bearer ${token}`
+      }),
+      responseType: 'text',
+    };
+
+    try {
+      const request = this.httpClient.delete<string>(`${this.API_URL}/Chat/LeaveChat/${chatId}`, options);
+      await lastValueFrom(request);
+      await this.getUserChatList();
+      this.selectedChat.set(new Chat);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async deleteChat(chatId: number): Promise<void> {
+    const options: any = {
+      headers: new HttpHeaders({
+        Accept: 'text/html, application/xhtml+xml, */*'
+      }),
+      responseType: 'text',
+    };
+
+    try {
+      const request = this.httpClient.delete<string>(`${this.API_URL}/Chat/${chatId}`, options);
+      await lastValueFrom(request);
+      await this.getUserChatList();
+      this.selectedChat.set(new Chat);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async getUsersInChat(): Promise<void> {
+    try {
+      const chatId = this.selectedChat().chatId;
+      const request = this.httpClient.get(`${this.API_URL}/Chat/UsersInChat/${chatId}`).pipe(
+        map((response: any) => response.map(this.mapToUser))
+      );
+      const users: User[] = await lastValueFrom(request);
+      this.memberList.set(users);
+    } catch (error) {
+      throw error;
+    }
+  }
+  private mapToUser(item: any): User {
+    return {
+      name: item.name,
+      email: item.email
     }
   }
 

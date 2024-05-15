@@ -1,0 +1,7 @@
+<ul>
+  @for (user of memberList; track $index) {
+    <li>{{user.name}}</li>
+  }
+</ul>
+<button id="btn-leave-chat" (click)="leaveChat()">Leave chat</button>
+<button id="btn-close-modal" (click)="closeModal()">Close</button>

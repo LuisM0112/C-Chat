@@ -12,4 +12,7 @@ export class HeaderMenuComponent {
 
   constructor(public cchatservice: CChatService){}
   
+  public deleteUser(): void {
+    this.cchatservice.deleteUser();
+  }
 }

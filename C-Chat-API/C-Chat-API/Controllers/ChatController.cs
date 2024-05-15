@@ -68,12 +68,12 @@ namespace C_Chat_API.Controllers
                     }
                     else
                     {
-                        var chats = await _dbContext.UserChats
+                        IEnumerable<Chat> chats = await _dbContext.UserChats
                             .Where(uc => uc.User.UserId == userId)
                             .Select(uc => uc.Chat)
                             .ToListAsync();
 
-                        var chatDtos = chats.Select(ChatDto.ToDto);
+                        IEnumerable<ChatDto> chatDtos = chats.Select(ChatDto.ToDto);
 
                         response = Ok(chatDtos);
                     }
@@ -82,6 +82,31 @@ namespace C_Chat_API.Controllers
             catch (FormatException)
             {
                 response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+            }
+            catch (Exception ex)
+            {
+                response = BadRequest(ex.Message);
+            }
+            return response;
+        }
+
+        [HttpGet("UsersInChat/{chatId}")]
+        public async Task<IActionResult> GetUsersInChat(int chatId)
+        {
+            IActionResult response;
+            try
+            {
+                Chat? chat = await _dbContext.Chats.FirstOrDefaultAsync(c => c.ChatId == chatId);
+                if (chat == null)
+                {
+                    response = NotFound(Messages.Chat.NotFound);
+                }
+                else
+                {
+                    IEnumerable<User> users = await _dbContext.Users.Where(u => u.UsersChats.Any(uc => uc.Chat.ChatId == chatId)).ToListAsync();
+                    IEnumerable<UserDto> usersDto = users.Select(UserDto.ToDto);
+                    response = Ok(usersDto);
+                }
             }
             catch (Exception ex)
             {

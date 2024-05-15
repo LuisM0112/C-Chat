@@ -1,8 +1,10 @@
 <div id="chat-area-container">
   <h3>
-    {{selectedChat ? '> '+selectedChat.name : '✕ Chat not selected'}}
-    @if (selectedChat) {
+    {{selectedChat.name ? '> '+selectedChat.name : '✕ Chat not selected'}}
+    @if (selectedChat.name) {
       <button id="btn-add-user" (click)="cchatService.toggleModalForm('dialog-add-user', true)">Add user</button>
+      <button id="btn-delete-chat" (click)="cchatService.deleteChat(selectedChat.chatId)">Delete chat</button>
+      <button id="btn-show-members" (click)="cchatService.toggleModalForm('dialog-chat-members', true)">View users</button>
     }
   </h3>
   <div id="chat-container"></div>
@@ -11,6 +13,11 @@
     <button>Send</button>
   </div>
 </div>
-<dialog id="dialog-add-user">
-  <app-add-user-form (closeDialog)="cchatService.toggleModalForm('dialog-add-user', false)" />
-</dialog>
+@if (selectedChat.name) {
+  <dialog id="dialog-add-user">
+    <app-add-user-form (closeDialog)="cchatService.toggleModalForm('dialog-add-user', false)" />
+  </dialog>
+  <dialog id="dialog-chat-members">
+    <app-chat-members-list (closeDialog)="cchatService.toggleModalForm('dialog-chat-members', false)" />
+  </dialog>
+}

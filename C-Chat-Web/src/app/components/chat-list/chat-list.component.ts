@@ -27,7 +27,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
     this.cchatService.getUserChatList();
   }
 
-  getChatListFiltered(): Chat[] {
+  public getChatListFiltered(): Chat[] {
     return this.filter ? this.chatList.filter(chat => chat.name.toLowerCase().includes(this.filter)) : this.chatList;
   }
 

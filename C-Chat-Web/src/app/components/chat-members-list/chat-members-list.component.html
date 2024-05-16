@@ -1,5 +1,6 @@
+<app-search-bar (filterText)="updateFilter($event)" />
 <ul>
-  @for (user of memberList; track $index) {
+  @for (user of getMemberListFiltered(); track $index) {
     <li>{{user.name}}</li>
   }
 </ul>

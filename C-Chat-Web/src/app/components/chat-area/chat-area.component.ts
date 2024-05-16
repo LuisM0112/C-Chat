@@ -6,11 +6,11 @@ import { AddUserFormComponent } from "../add-user-form/add-user-form.component";
 import { ChatMembersListComponent } from "../chat-members-list/chat-members-list.component";
 
 @Component({
-    selector: 'app-chat-area',
-    standalone: true,
-    templateUrl: './chat-area.component.html',
-    styleUrl: './chat-area.component.css',
-    imports: [FormsModule, AddUserFormComponent, ChatMembersListComponent]
+  selector: 'app-chat-area',
+  standalone: true,
+  templateUrl: './chat-area.component.html',
+  styleUrl: './chat-area.component.css',
+  imports: [FormsModule, AddUserFormComponent, ChatMembersListComponent]
 })
 export class ChatAreaComponent implements OnDestroy{
 

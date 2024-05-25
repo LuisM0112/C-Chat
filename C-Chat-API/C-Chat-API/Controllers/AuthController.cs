@@ -52,6 +52,42 @@ namespace C_Chat_API.Controllers
             return response;
         }
 
+        [HttpGet("UserData")]
+        public async Task<IActionResult> GetUser()
+        {
+            IActionResult response;
+            try
+            {
+                string? userIdstr = User?.FindFirst("id")?.Value;
+                if (userIdstr == null)
+                {
+                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                }
+                else
+                {
+                    int userId = Int32.Parse(userIdstr);
+                    User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+                    if (user == null)
+                    {
+                        response = NotFound(Messages.User.NotFound);
+                    }
+                    else
+                    {
+                        response = Ok(user.Name);
+                    }
+                }
+            }
+            catch (FormatException)
+            {
+                response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+            }
+            catch (Exception ex)
+            {
+                response = BadRequest(ex.Message);
+            }
+            return response;
+        }
+
         /* ---------- POST ---------- */
 
         [HttpPost("SignUp")]

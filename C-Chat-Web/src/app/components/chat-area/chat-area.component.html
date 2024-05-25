@@ -7,10 +7,23 @@
       <button id="btn-show-members" (click)="cchatService.toggleModalForm('dialog-chat-members', true)">View users</button>
     }
   </h3>
-  <div id="chat-container"></div>
+  <div id="chat-container">
+    @for (message of messages; track $index) {
+      <div class="message-container {{cchatService.userName == message.author ? 'self' : 'other'}}">
+        <div class="message">
+          <span class="message-info">
+            {{message.author}} - {{message.date.slice(11)}}
+          </span>
+          <span class="message-content">
+            {{message.content}}
+          </span>
+        </div>
+      </div>
+    }
+  </div>
   <div id="input-container">
     <input type="text" [(ngModel)]="inputText" placeholder="⌨️ Type here...">
-    <button>Send</button>
+    <button (click)="sendMessage()">Send</button>
   </div>
 </div>
 @if (selectedChat.name) {

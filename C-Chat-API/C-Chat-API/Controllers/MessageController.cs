@@ -2,7 +2,6 @@
 using C_Chat_API.Models;
 using C_Chat_API.Models.Dto;
 using C_Chat_API.Models.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

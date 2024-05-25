@@ -6,11 +6,11 @@ import { AuthViewComponent } from "./views/auth-view/auth-view.component";
 import { CChatService } from './services/c-chat.service';
 
 @Component({
-    selector: 'app-root',
-    standalone: true,
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.css',
-    imports: [RouterOutlet, MainViewComponent, HttpClientModule, AuthViewComponent]
+  selector: 'app-root',
+  standalone: true,
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css',
+  imports: [RouterOutlet, MainViewComponent, HttpClientModule, AuthViewComponent]
 })
 export class AppComponent {
   title = 'C-Chat';

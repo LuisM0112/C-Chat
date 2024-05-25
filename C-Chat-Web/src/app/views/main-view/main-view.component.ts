@@ -5,11 +5,11 @@ import { HeaderMenuComponent } from "../../components/header-menu/header-menu.co
 import { ChatAreaComponent } from "../../components/chat-area/chat-area.component";
 
 @Component({
-    selector: 'app-main-view',
-    standalone: true,
-    templateUrl: './main-view.component.html',
-    styleUrl: './main-view.component.css',
-    imports: [ChatListComponent, HeaderMenuComponent, ChatAreaComponent]
+  selector: 'app-main-view',
+  standalone: true,
+  templateUrl: './main-view.component.html',
+  styleUrl: './main-view.component.css',
+  imports: [ChatListComponent, HeaderMenuComponent, ChatAreaComponent]
 })
 export class MainViewComponent {
 

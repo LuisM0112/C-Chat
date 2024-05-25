@@ -1,32 +1,57 @@
-import { Component, EffectRef, OnDestroy, OnInit, effect } from '@angular/core';
+import { Component, EffectRef, OnDestroy, effect } from '@angular/core';
 import { Chat } from '../../model/classes/chat';
 import { CChatService } from '../../services/c-chat.service';
 import { FormsModule } from '@angular/forms';
 import { AddUserFormComponent } from "../add-user-form/add-user-form.component";
 import { ChatMembersListComponent } from "../chat-members-list/chat-members-list.component";
+import { WebSocketService } from '../../services/web-socket.service';
+import { Subscription } from 'rxjs';
+import { Message } from '../../model/classes/message';
 
 @Component({
-    selector: 'app-chat-area',
-    standalone: true,
-    templateUrl: './chat-area.component.html',
-    styleUrl: './chat-area.component.css',
-    imports: [FormsModule, AddUserFormComponent, ChatMembersListComponent]
+  selector: 'app-chat-area',
+  standalone: true,
+  templateUrl: './chat-area.component.html',
+  styleUrl: './chat-area.component.css',
+  imports: [FormsModule, AddUserFormComponent, ChatMembersListComponent]
 })
 export class ChatAreaComponent implements OnDestroy{
 
   selectedChat: Chat = new Chat();
 
   private effectRef: EffectRef;
+  messages: Message[] = [];
+  messageSubscription: Subscription;
 
   inputText: string = '';
 
-  constructor(public cchatService: CChatService) {
+  constructor(
+    public cchatService: CChatService,
+    private webSocketService: WebSocketService
+  ) {
     this.effectRef = effect(() => {
+      this.messages = [];
+      this.webSocketService.disconnect();
       this.selectedChat = cchatService.selectedChat();
+      if (this.selectedChat.name) {
+        this.webSocketService.connect(this.selectedChat.chatId);
+      }
+    });
+    this.messageSubscription = this.webSocketService.getMessages().subscribe(message => {
+      this.messages.push(message);
     });
   }
 
   public ngOnDestroy(): void {
     this.effectRef.destroy();
+    this.webSocketService.disconnect();
+    this.messageSubscription.unsubscribe();
+  }
+
+  public sendMessage(): void {
+    if (this.inputText.trim() !== '') {
+      this.webSocketService.sendMessage(this.inputText);
+      this.inputText = '';
+    }
   }
 }

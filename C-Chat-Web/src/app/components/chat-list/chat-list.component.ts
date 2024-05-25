@@ -5,11 +5,11 @@ import { CreateChatFormComponent } from "../create-chat-form/create-chat-form.co
 import { SearchBarComponent } from "../search-bar/search-bar.component";
 
 @Component({
-    selector: 'app-chat-list',
-    standalone: true,
-    templateUrl: './chat-list.component.html',
-    styleUrl: './chat-list.component.css',
-    imports: [CreateChatFormComponent, SearchBarComponent]
+  selector: 'app-chat-list',
+  standalone: true,
+  templateUrl: './chat-list.component.html',
+  styleUrl: './chat-list.component.css',
+  imports: [CreateChatFormComponent, SearchBarComponent]
 })
 export class ChatListComponent implements OnInit, OnDestroy {
 

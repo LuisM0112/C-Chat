@@ -4,11 +4,11 @@ import { User } from '../../model/classes/user';
 import { SearchBarComponent } from "../search-bar/search-bar.component";
 
 @Component({
-    selector: 'app-chat-members-list',
-    standalone: true,
-    templateUrl: './chat-members-list.component.html',
-    styleUrl: './chat-members-list.component.css',
-    imports: [SearchBarComponent]
+  selector: 'app-chat-members-list',
+  standalone: true,
+  templateUrl: './chat-members-list.component.html',
+  styleUrl: './chat-members-list.component.css',
+  imports: [SearchBarComponent]
 })
 export class ChatMembersListComponent implements OnInit, OnDestroy{
 

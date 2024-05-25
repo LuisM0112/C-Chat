@@ -10,6 +10,9 @@ ul {
   list-style: none;
   padding: 0;
   gap: 1em;
+  
+  overflow-y: auto;
+  max-height: 50vh;
 }
 
 li {

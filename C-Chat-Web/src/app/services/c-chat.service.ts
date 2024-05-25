@@ -11,6 +11,7 @@ import { User } from '../model/classes/user';
 export class CChatService {
   private API_URL: string = 'https://localhost:7201/api';
   private TOKEN_ITEM: string = 'C-ChatToken';
+  private USER_ITEM: string = 'C-ChatUserName';
 
   isUserLogged: boolean = localStorage.getItem(this.TOKEN_ITEM) ? true : false;
 
@@ -18,7 +19,18 @@ export class CChatService {
   selectedChat: WritableSignal<Chat> = signal(new Chat);
   memberList: WritableSignal<User[]> = signal([]);
 
-  constructor(private httpClient: HttpClient) { }
+  userName: string = '';
+
+  private options: any = {
+    headers: new HttpHeaders({
+      Accept: 'text/html, application/xhtml+xml, */*',
+    }),
+    responseType: 'text',
+  };
+
+  constructor(private httpClient: HttpClient) { 
+    this.userName = localStorage.getItem(this.USER_ITEM) ?? ''
+  }
 
   public async postSignUp(userData: any): Promise<string> {
     const formData = new FormData();
@@ -27,18 +39,11 @@ export class CChatService {
     formData.append('Password', userData.password);
     formData.append('PasswordBis', userData.passwordBis);
 
-    const options: any = {
-      headers: new HttpHeaders({
-        Accept: 'text/html, application/xhtml+xml, */*',
-      }),
-      responseType: 'text',
-    };
-
     try {
       const request = this.httpClient.post<string>(
         `${this.API_URL}/Auth/SignUp`,
         formData,
-        options
+        this.options
       );
       const response: any = await lastValueFrom(request);
       return response;
@@ -52,23 +57,18 @@ export class CChatService {
     formData.append('Email', userData.email);
     formData.append('Password', userData.password);
 
-    const options: any = {
-      headers: new HttpHeaders({
-        Accept: 'text/html, application/xhtml+xml, */*',
-      }),
-      responseType: 'text',
-    };
-
     try {
       const request = this.httpClient.post<string>(
         `${this.API_URL}/Auth/Login`,
         formData,
-        options
+        this.options
       );
       const response: any = await lastValueFrom(request);
 
+      
       this.isUserLogged = true;
       localStorage.setItem(this.TOKEN_ITEM, response);
+      await this.getUserData();
       return this.isUserLogged;
     } catch (error) {
       this.isUserLogged = false;
@@ -78,6 +78,10 @@ export class CChatService {
 
   public logOut(): void {
     this.isUserLogged = false;
+    this.chatList.set([]);
+    this.selectedChat.set(new Chat);
+    this.memberList.set([]);
+    this.userName = '';
     localStorage.removeItem(this.TOKEN_ITEM)
   }
 
@@ -200,15 +204,8 @@ export class CChatService {
   }
 
   public async deleteChat(chatId: number): Promise<void> {
-    const options: any = {
-      headers: new HttpHeaders({
-        Accept: 'text/html, application/xhtml+xml, */*'
-      }),
-      responseType: 'text',
-    };
-
     try {
-      const request = this.httpClient.delete<string>(`${this.API_URL}/Chat/${chatId}`, options);
+      const request = this.httpClient.delete<string>(`${this.API_URL}/Chat/${chatId}`, this.options);
       await lastValueFrom(request);
       await this.getUserChatList();
       this.selectedChat.set(new Chat);
@@ -233,6 +230,26 @@ export class CChatService {
     return {
       name: item.name,
       email: item.email
+    }
+  }
+
+  public async getUserData(): Promise<void> {
+    const token = localStorage.getItem(this.TOKEN_ITEM);
+    const options: any = {
+      headers: new HttpHeaders({
+        Accept: 'text/html, application/xhtml+xml, */*',
+        Authorization: `Bearer ${token}`
+      }),
+      responseType: 'text',
+    };
+
+    try {
+      const request = this.httpClient.get<string>(`${this.API_URL}/Auth/UserData`, options)
+      const response: any = await lastValueFrom(request);
+      this.userName = response;
+      localStorage.setItem(this.USER_ITEM, response);
+    } catch (error) {
+      throw error;
     }
   }
 

@@ -61,6 +61,6 @@ public class Program
 
         app.UseStaticFiles();
 
-        app.Run();
+        await app.RunAsync();
     }
 }

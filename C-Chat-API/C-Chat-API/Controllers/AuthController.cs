@@ -5,7 +5,6 @@ using C_Chat_API.Models.Dto;
 using C_Chat_API.Models.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -123,6 +122,7 @@ namespace C_Chat_API.Controllers
                 }
                 else
                 {
+                    /*
                     SqliteException sqliteException = (SqliteException)ex.InnerException;
                     if (sqliteException.SqliteExtendedErrorCode == 2067) // Unique Constraint (SQLite extended error: 2067)
                     {
@@ -133,6 +133,8 @@ namespace C_Chat_API.Controllers
                         response = BadRequest(Messages.Form.MissingFields);
                     }
                     else response = BadRequest(sqliteException.Message);
+                    */
+                    response = BadRequest(ex.Message);
                 }
             }
             return response;

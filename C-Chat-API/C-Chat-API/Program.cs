@@ -1,4 +1,5 @@
 using C_Chat_API.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -15,7 +16,10 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
-        builder.Services.AddScoped<ChatContext>();
+        var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
+        builder.Services.AddDbContext<ChatContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+
+        // builder.Services.AddScoped<ChatContext>();
 
         builder.Services.AddAuthentication()
                         .AddJwtBearer(options =>
@@ -32,11 +36,13 @@ public class Program
 
         var app = builder.Build();
 
+        /*
         using (IServiceScope scope = app.Services.CreateScope())
         {
             ChatContext dbContext = scope.ServiceProvider.GetRequiredService<ChatContext>(); // "Required" == !null
             dbContext.Database.EnsureCreated();
         }
+        */
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())

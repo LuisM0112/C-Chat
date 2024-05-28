@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { AddUserFormComponent } from "../add-user-form/add-user-form.component";
 import { ChatMembersListComponent } from "../chat-members-list/chat-members-list.component";
 import { WebSocketService } from '../../services/web-socket.service';
-import { Subscription } from 'rxjs';
 import { Message } from '../../model/classes/message';
 
 @Component({
@@ -19,9 +18,9 @@ export class ChatAreaComponent implements OnDestroy{
 
   selectedChat: Chat = new Chat();
 
-  private effectRef: EffectRef;
-  messages: Message[] = [];
-  messageSubscription: Subscription;
+  private selectedChatEffectRef: EffectRef;
+  private messageEffectRef: EffectRef;
+  public messages: Message[] = [];
 
   inputText: string = '';
 
@@ -29,7 +28,7 @@ export class ChatAreaComponent implements OnDestroy{
     public cchatService: CChatService,
     private webSocketService: WebSocketService
   ) {
-    this.effectRef = effect(() => {
+    this.selectedChatEffectRef = effect(() => {
       this.messages = [];
       this.webSocketService.disconnect();
       this.selectedChat = cchatService.selectedChat();
@@ -37,15 +36,18 @@ export class ChatAreaComponent implements OnDestroy{
         this.webSocketService.connect(this.selectedChat.chatId);
       }
     });
-    this.messageSubscription = this.webSocketService.getMessages().subscribe(message => {
-      this.messages.push(message);
+    this.messageEffectRef = effect(() => {
+      const message = webSocketService.message()
+      if (message.author) {
+        this.messages.push(message)
+      }
     });
   }
 
   public ngOnDestroy(): void {
-    this.effectRef.destroy();
+    this.selectedChatEffectRef.destroy();
+    this.messageEffectRef.destroy()
     this.webSocketService.disconnect();
-    this.messageSubscription.unsubscribe();
   }
 
   public sendMessage(): void {

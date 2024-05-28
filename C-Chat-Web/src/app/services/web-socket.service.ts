@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Injectable, WritableSignal, signal } from '@angular/core';
 import { Message } from '../model/classes/message';
 
 @Injectable({
@@ -10,7 +9,7 @@ export class WebSocketService {
   private API_URL: string = 'https://localhost:7201';
   private TOKEN_ITEM: string = 'C-ChatToken';
   private socket!: WebSocket;
-  private subject: Subject<any> = new Subject<any>();
+  public message: WritableSignal<Message> = signal(new Message("","","",""));
 
   constructor() { }
 
@@ -23,20 +22,19 @@ export class WebSocketService {
     };
 
     this.socket.onmessage = (event) => {
-      const messageStr: string[] = event.data.split("¨")
+      const messageStr: string[] = event.data.split("¨");
       
       const message: Message = new Message(
-        messageStr[0],
-        messageStr[1],
-        messageStr[2],
-        messageStr[3]
+        messageStr[0], // <-- author
+        messageStr[1], // <-- chat name
+        messageStr[2], // <-- date
+        messageStr[3]  // <-- content
       );
-      this.subject.next(message);
-      console.log(message);
-      
+      this.message.set(message);
     };
 
     this.socket.onclose = () => {
+      this.message.set(new Message("","","",""));
       console.log('WebSocket connection closed');
     };
   }
@@ -45,10 +43,6 @@ export class WebSocketService {
     if (this.socket.readyState === WebSocket.OPEN) {
       this.socket.send(message);
     }
-  }
-
-  public getMessages(): Observable<Message> {
-    return this.subject.asObservable();
   }
 
   public disconnect(): void {

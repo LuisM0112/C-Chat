@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MySqlConnector;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -122,19 +123,20 @@ namespace C_Chat_API.Controllers
                 }
                 else
                 {
-                    /*
-                    SqliteException sqliteException = (SqliteException)ex.InnerException;
-                    if (sqliteException.SqliteExtendedErrorCode == 2067) // Unique Constraint (SQLite extended error: 2067)
+                    MySqlException mySqlException = (MySqlException)ex.InnerException;
+
+                    if (mySqlException.ErrorCode.ToString().Equals("DuplicateKeyEntry"))
                     {
                         response = BadRequest(Messages.User.AlreadyExists);
                     }
-                    else if (sqliteException.SqliteExtendedErrorCode == 1299) // Required Constraint (SQLite extended error: 1299)
+                    else if (mySqlException.ErrorCode.ToString().Equals("ColumnCannotBeNull"))
                     {
                         response = BadRequest(Messages.Form.MissingFields);
                     }
-                    else response = BadRequest(sqliteException.Message);
-                    */
-                    response = BadRequest(ex.Message);
+                    else
+                    {
+                        response = BadRequest(mySqlException.Message);
+                    }
                 }
             }
             return response;

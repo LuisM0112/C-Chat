@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using MySqlConnector;
 
 namespace C_Chat_API.Controllers
 {
@@ -164,21 +165,29 @@ namespace C_Chat_API.Controllers
             {
                 response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-                /*
-                SqliteException sqliteException = (SqliteException)ex.InnerException;
-                if (sqliteException.SqliteExtendedErrorCode == 2067) // Unique Constraint (SQLite extended error: 2067)
+                if (ex.InnerException == null)
                 {
-                    response = BadRequest(Messages.Chat.AlreadyExists);
+                    response = BadRequest(ex.Message);
                 }
-                else if (sqliteException.SqliteExtendedErrorCode == 1299) // Required Constraint (SQLite extended error: 1299)
+                else
                 {
-                    response = BadRequest(Messages.Form.MissingFields);
+                    MySqlException mySqlException = (MySqlException)ex.InnerException;
+
+                    if (mySqlException.ErrorCode.ToString().Equals("DuplicateKeyEntry"))
+                    {
+                        response = BadRequest(Messages.Chat.AlreadyExists);
+                    }
+                    else if (mySqlException.ErrorCode.ToString().Equals("ColumnCannotBeNull"))
+                    {
+                        response = BadRequest(Messages.Form.MissingFields);
+                    }
+                    else
+                    {
+                        response = BadRequest(mySqlException.Message);
+                    }
                 }
-                else response = BadRequest(sqliteException.Message);
-                */
-                response = BadRequest(ex.Message);
             }
             return response;
         }

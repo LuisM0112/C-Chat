@@ -1,4 +1,4 @@
-import { Component, EffectRef, OnDestroy, effect } from '@angular/core';
+import { Component, EffectRef, ElementRef, OnDestroy, ViewChild, effect } from '@angular/core';
 import { Chat } from '../../model/classes/chat';
 import { CChatService } from '../../services/c-chat.service';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,8 @@ import { Message } from '../../model/classes/message';
   imports: [FormsModule, AddUserFormComponent, ChatMembersListComponent]
 })
 export class ChatAreaComponent implements OnDestroy{
+
+  @ViewChild('chatContainer') private chatContainer!: ElementRef;
 
   selectedChat: Chat = new Chat();
 
@@ -39,9 +41,28 @@ export class ChatAreaComponent implements OnDestroy{
     this.messageEffectRef = effect(() => {
       const message = webSocketService.message()
       if (message.author) {
-        this.messages.push(message)
+        const wasAtBottom = this.isUserAtBottom();
+        this.messages.push(message);
+        if (wasAtBottom) {
+          setTimeout(() => this.scrollToBottom(), 20);
+        }
       }
     });
+  }
+
+  private scrollToBottom(): void {
+    try {
+      this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+    } catch(err) { 
+      console.error(err); 
+    }
+  }
+
+  private isUserAtBottom(): boolean {
+    const threshold = 30;
+    const position = this.chatContainer.nativeElement.scrollTop + this.chatContainer.nativeElement.offsetHeight;
+    const height = this.chatContainer.nativeElement.scrollHeight;
+    return position > height - threshold;
   }
 
   public ngOnDestroy(): void {

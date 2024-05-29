@@ -2,17 +2,19 @@
   background-color: rgba(110, 110, 110, 0.336);
   padding: 5px;
   border-radius: 8px;
+  height: 100%;
 }
 
 ul {
   display: flex;
   flex-direction: column;
   list-style: none;
+  height: 70%;
   padding: 0;
   gap: 1em;
   
-  overflow-y: auto;
-  max-height: 50vh;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 li {

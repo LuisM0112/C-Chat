@@ -7,7 +7,7 @@
       <button id="btn-show-members" (click)="cchatService.toggleModalForm('dialog-chat-members', true)">View users</button>
     }
   </h3>
-  <div id="chat-container">
+  <div id="chat-container" #chatContainer>
     @for (message of messages; track $index) {
       <div class="message-container {{cchatService.userName == message.author ? 'self' : 'other'}}">
         <div class="message">

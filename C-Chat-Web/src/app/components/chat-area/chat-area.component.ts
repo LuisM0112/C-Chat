@@ -44,7 +44,7 @@ export class ChatAreaComponent implements OnDestroy{
         const wasAtBottom = this.isUserAtBottom();
         this.messages.push(message);
         if (wasAtBottom) {
-          setTimeout(() => this.scrollToBottom(), 20);
+          this.scrollToBottom();
         }
       }
     });
@@ -52,14 +52,14 @@ export class ChatAreaComponent implements OnDestroy{
 
   private scrollToBottom(): void {
     try {
-      this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+      setTimeout(() => this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight, 30);
     } catch(err) { 
       console.error(err); 
     }
   }
 
   private isUserAtBottom(): boolean {
-    const threshold = 30;
+    const threshold = 60;
     const position = this.chatContainer.nativeElement.scrollTop + this.chatContainer.nativeElement.offsetHeight;
     const height = this.chatContainer.nativeElement.scrollHeight;
     return position > height - threshold;
@@ -75,6 +75,7 @@ export class ChatAreaComponent implements OnDestroy{
     if (this.inputText.trim() !== '') {
       this.webSocketService.sendMessage(this.inputText);
       this.inputText = '';
+      this.scrollToBottom();
     }
   }
 }

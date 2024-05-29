@@ -1,6 +1,8 @@
 <form>
   <b>User name</b>
   <input type="text" [(ngModel)]="userName" name="userName" placeholder="User name">
-  <button (click)="addUser()">Confirm</button>
-  <button (click)="closeForm()">Cancel</button>
+  <div class="btn-wraper">
+    <button class="btn-preferential" type="submit" (click)="addUser()">Confirm</button>
+    <button type="reset" (click)="closeForm()">Cancel</button>
+  </div>
 </form>

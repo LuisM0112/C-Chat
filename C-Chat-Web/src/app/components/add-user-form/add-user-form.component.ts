@@ -41,7 +41,6 @@ export class AddUserFormComponent implements OnDestroy {
   }
 
   public closeForm(): void {
-    this.userName = ''
     this.closeDialog.emit();
   }
 

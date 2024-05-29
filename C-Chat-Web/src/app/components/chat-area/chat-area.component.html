@@ -2,9 +2,9 @@
   <h3>
     {{selectedChat.name ? '> '+selectedChat.name : '✕ Chat not selected'}}
     @if (selectedChat.name) {
-      <button id="btn-add-user" (click)="cchatService.toggleModalForm('dialog-add-user', true)">Add user</button>
-      <button id="btn-delete-chat" (click)="cchatService.deleteChat(selectedChat.chatId)">Delete chat</button>
-      <button id="btn-show-members" (click)="cchatService.toggleModalForm('dialog-chat-members', true)">View users</button>
+      <button type="menu" id="btn-add-user" (click)="cchatService.toggleModalForm('dialog-add-user', true)">Add user</button>
+      <button type="menu" id="btn-delete-chat" (click)="cchatService.deleteChat(selectedChat.chatId)">Delete chat</button>
+      <button type="menu" id="btn-show-members" (click)="cchatService.toggleModalForm('dialog-chat-members', true)">View users</button>
     }
   </h3>
   <div id="chat-container" #chatContainer>
@@ -22,8 +22,8 @@
     }
   </div>
   <div id="input-container">
-    <input type="text" [(ngModel)]="inputText" placeholder="⌨️ Type here...">
-    <button (click)="sendMessage()">Send</button>
+    <input type="text" [(ngModel)]="inputText" placeholder="⌨️ Type here..." (keydown.enter)="sendMessage()">
+    <button type="submit" id="btn-send" (click)="sendMessage()">Send</button>
   </div>
 </div>
 @if (selectedChat.name) {

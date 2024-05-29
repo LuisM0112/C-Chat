@@ -15,7 +15,7 @@
   padding: 1em;
   gap: 1em;
 
-  overflow-y: scroll;
+  overflow-y: auto;
   scroll-behavior: smooth;
 }
 
@@ -42,22 +42,20 @@ input {
   display: flex;
 }
 
-.message-container .message {
-  padding: 1em;
-  background-color: rgba(110, 110, 110, 0.336);
-  width: max-content;
-  border-radius: 8px;
-}
-
 .message-content {
+  word-wrap: break-word;
+  text-wrap: pretty;
   text-align: justify;
   max-width: 500px;
 }
 
 .message {
+  padding: 1em;
+  background-color: rgba(110, 110, 110, 0.336);
+  width: max-content;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
 }
 
 .self{

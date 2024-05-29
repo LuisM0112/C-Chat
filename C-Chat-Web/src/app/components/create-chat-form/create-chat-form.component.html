@@ -1,6 +1,8 @@
 <form>
   <b>Name</b>
   <input type="text" [(ngModel)]="chatName" name="chatName" placeholder="Chat name">
-  <button (click)="createChat()">Confirm</button>
-  <button (click)="closeForm()">Cancel</button>
+  <div class="btn-wraper">
+    <button class="btn-preferential" type="submit" (click)="createChat()">Confirm</button>
+    <button type="reset" (click)="closeForm()">Cancel</button>
+  </div>
 </form>

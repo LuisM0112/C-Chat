@@ -9,8 +9,26 @@
   box-sizing: border-box;
 }
 
-button {
+button:not(#btn-send) {
   cursor: pointer;
+  margin: 0 5px 0 5px;
+  border-radius: 5px;
+  border: hidden;
+  padding: 5px;
+}
+button:hover {
+  transform: scale(1.03);
+}
+button:active {
+  transform: scale(1);
+}
+.btn-wraper {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn-preferential {
+  background-color: seagreen;
 }
 
 dialog[open] {
@@ -32,4 +50,16 @@ form {
   display: flex;
   flex-direction: column;
   gap: 1em;
+}
+
+@media only screen and (max-width: 768px) {
+  h2 {
+    font-size: medium;
+  }
+  h3 {
+    font-size: small;
+  }
+  hr {
+    visibility: none;
+  }
 }

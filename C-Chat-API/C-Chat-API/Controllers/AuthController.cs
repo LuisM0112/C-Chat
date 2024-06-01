@@ -4,6 +4,7 @@ using C_Chat_API.Models.Clases;
 using C_Chat_API.Models.Dto;
 using C_Chat_API.Models.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -86,6 +87,18 @@ namespace C_Chat_API.Controllers
                 response = BadRequest(ex.Message);
             }
             return response;
+        }
+
+        [HttpGet("AmIAdmin")]
+        public async Task<bool> GetAmIAdmin()
+        {
+            var userRoles = User.Claims
+                            .Where(c => c.Type == ClaimTypes.Role)
+                            .Select(c => c.Value)
+                            .ToList();
+
+            bool isAdmin = userRoles.Contains("ADMIN");
+            return isAdmin;
         }
 
         /* ---------- POST ---------- */

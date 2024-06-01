@@ -3,5 +3,8 @@
   <div>
     <button type="menu" id="btn-log-out" (click)="cchatservice.logOut()">Log out</button>
     <button type="menu" id="btn-delete-account" (click)="deleteUser()">Delete account</button>
+    @if (cchatservice.isUserAdmin) {
+      <button type="menu" id="btn-show-admin">Admin</button>
+    }
   </div>
 </div>

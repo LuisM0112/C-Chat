@@ -15,6 +15,7 @@ export class CChatService {
   private USER_ITEM: string = 'C-ChatUserName';
 
   isUserLogged: boolean = localStorage.getItem(this.TOKEN_ITEM) ? true : false;
+  isUserAdmin: boolean = false;
 
   chatList: WritableSignal<Chat[]> = signal([]);
   selectedChat: WritableSignal<Chat> = signal(new Chat);
@@ -52,7 +53,7 @@ export class CChatService {
     } catch (error) {
       const httpError = error as HttpErrorResponse;
       this.toastr.error(httpError.error);
-      throw error;
+      throw httpError.error;
     }
   }
 
@@ -79,7 +80,7 @@ export class CChatService {
       this.isUserLogged = false;
       const httpError = error as HttpErrorResponse;
       this.toastr.error(httpError.error);
-      throw error;
+      throw httpError.error;
     }
   }
 
@@ -110,7 +111,29 @@ export class CChatService {
       this.logOut();
       this.toastr.info(response);
     } catch (error) {
-      throw error;
+      const httpError = error as HttpErrorResponse;
+      throw httpError.error;
+    }
+  }
+
+  public async getAmIAdmin(): Promise<void> {
+    const token = localStorage.getItem(this.TOKEN_ITEM);    
+    const options: any = {
+      headers: new HttpHeaders({
+        Accept: 'text/html, application/xhtml+xml, */*',
+        Authorization: `Bearer ${token}`
+      }),
+      responseType: 'text',
+    };
+
+    try {
+      const request = this.httpClient.get<boolean>(`${this.API_URL}/Auth/AmIAdmin`, options);
+      const response: any = await lastValueFrom(request);
+      
+      this.isUserAdmin = response == 'true' ? true : false;
+      
+    } catch (error) {
+      this.isUserAdmin = false;
     }
   }
 
@@ -156,7 +179,7 @@ export class CChatService {
     } catch (error) {
       const httpError = error as HttpErrorResponse;
       this.toastr.error(httpError.error);
-      throw error;
+      throw httpError.error;
     }
   }
 
@@ -185,7 +208,7 @@ export class CChatService {
     } catch (error) {
       const httpError = error as HttpErrorResponse;
       this.toastr.error(httpError.error);
-      throw error;
+      throw httpError.error;
     }
   }
 
@@ -211,7 +234,7 @@ export class CChatService {
     } catch (error) {
       const httpError = error as HttpErrorResponse;
       this.toastr.error(httpError.error);
-      throw error;
+      throw httpError.error;
     }
   }
 
@@ -225,7 +248,7 @@ export class CChatService {
     } catch (error) {
       const httpError = error as HttpErrorResponse;
       this.toastr.error(httpError.error);
-      throw error;
+      throw httpError.error;
     }
   }
 
@@ -238,7 +261,8 @@ export class CChatService {
       const users: User[] = await lastValueFrom(request);
       this.memberList.set(users);
     } catch (error) {
-      throw error;
+      const httpError = error as HttpErrorResponse;
+      throw httpError.error;
     }
   }
   private mapToUser(item: any): User {
@@ -264,7 +288,8 @@ export class CChatService {
       this.userName = response;
       localStorage.setItem(this.USER_ITEM, response);
     } catch (error) {
-      throw error;
+      const httpError = error as HttpErrorResponse;
+      throw httpError.error;
     }
   }
 

@@ -15,4 +15,8 @@ export class MainViewComponent {
 
   constructor(public cchatservice: CChatService){}
 
+  async ngOnInit(): Promise<void> {
+    await this.cchatservice.getAmIAdmin();
+  }
+
 }

@@ -45,7 +45,6 @@ input {
 .message-content {
   word-wrap: break-word;
   text-wrap: pretty;
-  text-align: justify;
   max-width: 500px;
 }
 

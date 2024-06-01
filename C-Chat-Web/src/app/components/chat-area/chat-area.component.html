@@ -22,7 +22,7 @@
     }
   </div>
   <div id="input-container">
-    <input type="text" [(ngModel)]="inputText" placeholder="⌨️ Type here..." (keydown.enter)="sendMessage()">
+    <input type="text" id="input-message" [(ngModel)]="inputText" placeholder="⌨️ Type here..." (keydown.enter)="sendMessage()">
     <button type="submit" id="btn-send" (click)="sendMessage()">Send</button>
   </div>
 </div>

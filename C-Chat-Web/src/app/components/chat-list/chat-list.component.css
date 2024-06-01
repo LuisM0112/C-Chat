@@ -20,6 +20,8 @@ ul {
 }
 
 li {
+  display: flex;
+  align-items: center;
   background-color: rgba(110, 110, 110, 0.336);
   padding: 5px;
   border-radius: 8px;
@@ -29,4 +31,10 @@ li {
 
 li:hover {
   filter: brightness(200%);
+}
+
+@media only screen and (max-width: 768px) {
+  ul {
+    flex-direction: row;
+  }
 }

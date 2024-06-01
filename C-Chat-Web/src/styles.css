@@ -1,5 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+
+/* Font: Fira Code */
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+
 :root {
   color-scheme: light dark;
   font-family: "Fira Code", monospace;
@@ -7,6 +9,10 @@
 
 *, *::before, *::after {
   box-sizing: border-box;
+}
+
+#top-layer {
+  z-index: 2;
 }
 
 button:not(#btn-send) {
@@ -36,13 +42,7 @@ dialog[open] {
   flex-direction: column;
 }
 dialog::backdrop {
-  background-image: linear-gradient(
-    45deg,
-    magenta,
-    rebeccapurple,
-    dodgerblue,
-    green
-  );
+  background-color: rgba(213, 232, 255, 0.3);
   opacity: 0.75;
 }
 

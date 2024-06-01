@@ -2,7 +2,7 @@
 {
     public class UserChatInsert
     {
-        public int ChatId { get; set; }
-        public string UserName { get; set; }
+        public int? ChatId { get; set; }
+        public string? UserName { get; set; }
     }
 }

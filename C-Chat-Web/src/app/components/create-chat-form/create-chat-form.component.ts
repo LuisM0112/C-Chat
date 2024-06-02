@@ -18,12 +18,8 @@ export class CreateChatFormComponent {
   constructor(public cchatService: CChatService){}
 
   public async createChat(): Promise<void> {
-    try {
-      await this.cchatService.postCreateChat(this.chatName);
-      this.closeForm();
-    } catch (error) {
-      console.error('Error: ', error);
-    }
+    await this.cchatService.postCreateChat(this.chatName);
+    this.closeForm();
   }
 
   public closeForm(): void {

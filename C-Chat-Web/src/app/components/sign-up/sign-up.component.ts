@@ -21,11 +21,7 @@ export class SignUpComponent {
   constructor(public cchatService: CChatService){}
 
   public async signUp(): Promise<void> {
-    try {
-      const response = await this.cchatService.postSignUp(this.userData);
-      console.log(response);
-    } catch (error) {
-      console.error('Error: ', error);
-    }
+    const response = await this.cchatService.postSignUp(this.userData);
+    console.log(response);
   }
 }

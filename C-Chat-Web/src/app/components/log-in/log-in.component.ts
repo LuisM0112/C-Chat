@@ -19,10 +19,6 @@ export class LogInComponent {
   constructor(public cchatService: CChatService){}
 
   public async logIn(): Promise<void> {
-    try {
-      const response = await this.cchatService.postLogIn(this.userData);
-    } catch (error) {
-      console.error('Error: ', error);
-    }
+    const response = await this.cchatService.postLogIn(this.userData);
   }
 }

@@ -51,11 +51,7 @@ export class ChatAreaComponent implements OnDestroy{
   }
 
   private scrollToBottom(): void {
-    try {
-      setTimeout(() => this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight, 30);
-    } catch(err) { 
-      console.error(err); 
-    }
+    setTimeout(() => this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight, 30);
   }
 
   private isUserAtBottom(): boolean {

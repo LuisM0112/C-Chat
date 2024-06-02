@@ -27,17 +27,14 @@ export class AddUserFormComponent implements OnDestroy {
   }
 
   public async addUser(): Promise<void> {
-    try {
-      const userToAdd: UserChatInsert = new UserChatInsert(
-        this.selectedChat.chatId.toString(),
-        this.userName
-      );
-      await this.cchatService.postAddUserToChat(userToAdd);
-      this.closeForm();
-      this.cchatService.getUsersInChat();
-    } catch (error) {
-      console.error('Error: ', error);
-    }
+    const userToAdd: UserChatInsert = new UserChatInsert(
+      this.selectedChat.chatId.toString(),
+      this.userName
+    );
+    await this.cchatService.postAddUserToChat(userToAdd);
+    this.closeForm();
+    this.userName = ''
+    this.cchatService.getUsersInChat();
   }
 
   public closeForm(): void {

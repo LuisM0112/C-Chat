@@ -12,7 +12,6 @@ export const errorInterceptorInterceptor: HttpInterceptorFn = (req, next: HttpHa
       toastr.error("Failed to connect to server")
     } else {
       toastr.error(error.error)
-      console.log(error);
     }
     
     return throwError(() => error);

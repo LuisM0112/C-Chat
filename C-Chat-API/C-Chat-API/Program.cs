@@ -36,13 +36,21 @@ public class Program
 
         var app = builder.Build();
 
-        /*
-        using (IServiceScope scope = app.Services.CreateScope())
+        using (var scope = app.Services.CreateScope())
         {
-            ChatContext dbContext = scope.ServiceProvider.GetRequiredService<ChatContext>(); // "Required" == !null
-            dbContext.Database.EnsureCreated();
+            var services = scope.ServiceProvider;
+            try
+            {
+                var context = services.GetRequiredService<ChatContext>();
+                context.Database.Migrate();  // Apply any pending migrations
+                context.Seed();  // Seed the database
+            }
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError(ex, "An error occurred seeding the database.");
+            }
         }
-        */
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())

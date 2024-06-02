@@ -5,7 +5,7 @@
   </h2>
   <app-search-bar (filterText)="updateFilter($event)" />
   <ul>
-    @for (chat of getChatListFiltered(); track chat.chatId) {
+    @for (chat of cchatService.getListFiltered(chatList, filter); track chat.chatId) {
       <li (click)="selectChat(chat)">{{ chat.name }}</li>
     }
   </ul>

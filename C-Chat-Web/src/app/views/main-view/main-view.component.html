@@ -3,3 +3,6 @@
   <app-chat-list />
   <app-chat-area />
 </div>
+<dialog id="dialog-admin-view">
+  <app-admin-view (closeDialog)="cchatService.toggleModalForm('dialog-admin-view', false)" />
+</dialog>

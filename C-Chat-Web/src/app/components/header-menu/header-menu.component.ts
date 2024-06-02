@@ -10,9 +10,9 @@ import { CChatService } from '../../services/c-chat.service';
 })
 export class HeaderMenuComponent {
 
-  constructor(public cchatservice: CChatService){}
+  constructor(public cchatService: CChatService){}
   
   public deleteUser(): void {
-    this.cchatservice.deleteUser();
+    this.cchatService.deleteUser();
   }
 }

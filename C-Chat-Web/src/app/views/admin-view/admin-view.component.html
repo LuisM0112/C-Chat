@@ -1,0 +1,22 @@
+<div id="lists-container">
+  <div id="users-list">
+    <h3>Users</h3>
+    <app-search-bar (filterText)="updateUserFilter($event)" />
+    <ul>
+      @for (user of cchatService.getListFiltered(userList, userFilter); track $index) {
+        <li>{{user.name}}</li>
+      }
+    </ul>
+  </div>
+  
+  <div id="chats-list">
+    <h3>Chats</h3>
+    <app-search-bar (filterText)="updateChatFilter($event)" />
+    <ul>
+      @for (chat of cchatService.getListFiltered(chatList, chatFilter); track $index) {
+        <li>{{chat.name}}</li>
+      }
+    </ul>
+  </div>
+</div>
+<button type="menu" (click)="closeForm()">Close</button>

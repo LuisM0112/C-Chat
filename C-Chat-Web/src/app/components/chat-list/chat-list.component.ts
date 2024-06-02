@@ -15,7 +15,7 @@ export class ChatListComponent implements OnInit, OnDestroy {
 
   private effectRef: EffectRef;
   protected chatList: Chat[] = []
-  private filter: string = '';
+  protected filter: string = '';
 
   constructor(public cchatService: CChatService) {
     this.effectRef = effect(() => {
@@ -25,10 +25,6 @@ export class ChatListComponent implements OnInit, OnDestroy {
   
   public ngOnInit(): void {
     this.cchatService.getUserChatList();
-  }
-
-  public getChatListFiltered(): Chat[] {
-    return this.filter ? this.chatList.filter(chat => chat.name.toLowerCase().includes(this.filter)) : this.chatList;
   }
 
   public updateFilter(event: string): void {

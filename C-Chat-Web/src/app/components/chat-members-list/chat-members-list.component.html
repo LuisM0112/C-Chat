@@ -1,6 +1,6 @@
 <app-search-bar (filterText)="updateFilter($event)" />
 <ul>
-  @for (user of getMemberListFiltered(); track $index) {
+  @for (user of cchatService.getListFiltered(memberList, filter); track $index) {
     <li>{{user.name}}</li>
   }
 </ul>

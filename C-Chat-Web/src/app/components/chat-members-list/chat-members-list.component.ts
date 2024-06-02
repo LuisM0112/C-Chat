@@ -12,9 +12,10 @@ import { SearchBarComponent } from "../search-bar/search-bar.component";
 })
 export class ChatMembersListComponent implements OnInit, OnDestroy{
 
-  private effectRef: EffectRef;
-  private filter: string = '';
   @Output() closeDialog: EventEmitter<void> = new EventEmitter<void>();
+  
+  private effectRef: EffectRef;
+  protected filter: string = '';
 
   protected memberList: User[] = []
 
@@ -26,10 +27,6 @@ export class ChatMembersListComponent implements OnInit, OnDestroy{
 
   public ngOnInit(): void {
     this.cchatService.getUsersInChat();
-  }
-
-  public getMemberListFiltered(): User[] {
-    return this.filter ? this.memberList.filter(member => member.name.toLowerCase().includes(this.filter)) : this.memberList;
   }
 
   public updateFilter(event: string): void {

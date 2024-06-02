@@ -1,4 +1,5 @@
 using C_Chat_API.Models;
+using C_Chat_API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -7,6 +8,9 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
+        Directory.SetCurrentDirectory(AppContext.BaseDirectory);
+        Directory.CreateDirectory("wwwroot");
+
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
@@ -15,6 +19,8 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+
+        builder.Services.AddSingleton<FileService>();
 
         var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
         builder.Services.AddDbContext<ChatContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));

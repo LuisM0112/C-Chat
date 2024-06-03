@@ -3,3 +3,8 @@
   justify-content: space-around;
   gap: 1em;
 }
+
+ul {
+  overflow-y: auto;
+  height: 30vh;
+}

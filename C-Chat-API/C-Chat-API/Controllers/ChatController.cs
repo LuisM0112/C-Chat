@@ -11,7 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace C_Chat_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/{language}/[controller]")]
     [ApiController]
     public class ChatController : ControllerBase
     {
@@ -31,13 +31,13 @@ namespace C_Chat_API.Controllers
         }
 
         [HttpGet("{chatId}")]
-        public async Task<IActionResult> GetChat(int chatId)
+        public async Task<IActionResult> GetChat(string language, int chatId)
         {
             IActionResult response;
             Chat? chat = await _dbContext.Chats.FirstOrDefaultAsync(c => c.ChatId == chatId);
             if (chat == null)
             {
-                response = NotFound(Messages.Chat.NotFound);
+                response = NotFound(Messages.Chat.NotFound[language]);
             }
             else
             {
@@ -47,7 +47,7 @@ namespace C_Chat_API.Controllers
         }
 
         [HttpGet("MyChats")]
-        public async Task<IActionResult> GetUserChats()
+        public async Task<IActionResult> GetUserChats(string language)
         {
             IActionResult response;
             try
@@ -55,14 +55,14 @@ namespace C_Chat_API.Controllers
                 int? userId = await ControllerHelper.GetUserIdFromClaims(User);
                 if (userId == null)
                 {
-                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
                 }
                 else
                 {
                     User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
                     if (user == null)
                     {
-                        response = NotFound(Messages.User.NotFound);
+                        response = NotFound(Messages.User.NotFound[language]);
                     }
                     else
                     {
@@ -79,7 +79,7 @@ namespace C_Chat_API.Controllers
             }
             catch (FormatException)
             {
-                response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
             }
             catch (Exception ex)
             {
@@ -89,7 +89,7 @@ namespace C_Chat_API.Controllers
         }
 
         [HttpGet("UsersInChat/{chatId}")]
-        public async Task<IActionResult> GetUsersInChat(int chatId)
+        public async Task<IActionResult> GetUsersInChat(string language, int chatId)
         {
             IActionResult response;
             try
@@ -97,7 +97,7 @@ namespace C_Chat_API.Controllers
                 Chat? chat = await _dbContext.Chats.FirstOrDefaultAsync(c => c.ChatId == chatId);
                 if (chat == null)
                 {
-                    response = NotFound(Messages.Chat.NotFound);
+                    response = NotFound(Messages.Chat.NotFound[language]);
                 }
                 else
                 {
@@ -117,7 +117,7 @@ namespace C_Chat_API.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> PostNewChat([FromForm] ChatInsert incomingNewChat)
+        public async Task<IActionResult> PostNewChat(string language, [FromForm] ChatInsert incomingNewChat)
         {
             IActionResult response;
             try
@@ -125,18 +125,18 @@ namespace C_Chat_API.Controllers
                 int? userId = await ControllerHelper.GetUserIdFromClaims(User);
                 if (userId == null)
                 {
-                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
                 }
                 else
                 {
                     User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
                     if (user == null)
                     {
-                        response = NotFound(Messages.User.NotFound);
+                        response = NotFound(Messages.User.NotFound[language]);
                     }
                     else if (incomingNewChat.Name.IsNullOrEmpty())
                     {
-                        response = BadRequest(Messages.Form.MissingFields);
+                        response = BadRequest(Messages.Form.MissingFields[language]);
                     }
                     else
                     {
@@ -159,23 +159,23 @@ namespace C_Chat_API.Controllers
                         await _dbContext.UserChats.AddAsync(newUserChat);
                         await _dbContext.SaveChangesAsync();
 
-                        response = StatusCode(201, Messages.Chat.Created);
+                        response = StatusCode(201, Messages.Chat.Created[language]);
                     }
                 }
             }
             catch (FormatException)
             {
-                response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
             }
             catch (DbUpdateException ex)
             {
-                response = ControllerHelper.HandleDbUpdateException(ex, false);
+                response = ControllerHelper.HandleDbUpdateException(ex, language, false);
             }
             return response;
         }
 
         [HttpPost("AddUserToChat")]
-        public async Task<IActionResult> PostAddUserToChat([FromForm] UserChatInsert incomingNewUserChat)
+        public async Task<IActionResult> PostAddUserToChat(string language, [FromForm] UserChatInsert incomingNewUserChat)
         {
             IActionResult response;
             try
@@ -183,14 +183,14 @@ namespace C_Chat_API.Controllers
                 int? userId = await ControllerHelper.GetUserIdFromClaims(User);
                 if (userId == null)
                 {
-                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
                 }
                 else
                 {
                     User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
                     if (user == null)
                     {
-                        response = NotFound(Messages.User.NotFound);
+                        response = NotFound(Messages.User.NotFound[language]);
                     }
                     else
                     {
@@ -200,18 +200,18 @@ namespace C_Chat_API.Controllers
                             .FirstOrDefaultAsync();
                         if (chat == null)
                         {
-                            response = Unauthorized(Messages.UserChat.DontBelongToChat);
+                            response = Unauthorized(Messages.UserChat.DontBelongToChat[language]);
                         }
                         else
                         {
                             User? userToAdd = await _dbContext.Users.FirstOrDefaultAsync(u => u.Name == incomingNewUserChat.UserName);
                             if (userToAdd == null)
                             {
-                                response = NotFound(Messages.UserChat.UserToAddNotFound);
+                                response = NotFound(Messages.UserChat.UserToAddNotFound[language]);
                             }
                             else if (await _dbContext.UserChats.AnyAsync(uc => uc.User.Name == userToAdd.Name && uc.Chat.ChatId == chat.ChatId))
                             {
-                                response = BadRequest(Messages.UserChat.UserAlreadyInChat);
+                                response = BadRequest(Messages.UserChat.UserAlreadyInChat[language]);
                             }
                             else
                             {
@@ -224,7 +224,7 @@ namespace C_Chat_API.Controllers
                                 await _dbContext.UserChats.AddAsync(newUserChat);
                                 await _dbContext.SaveChangesAsync();
 
-                                response = Ok(Messages.UserChat.UserAdded);
+                                response = Ok(Messages.UserChat.UserAdded[language]);
                             }
                         }
                     }
@@ -232,7 +232,7 @@ namespace C_Chat_API.Controllers
             }
             catch (FormatException)
             {
-                response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
             }
             catch (Exception ex)
             {
@@ -244,7 +244,7 @@ namespace C_Chat_API.Controllers
         /* ---------- DELETE ---------- */
 
         [HttpDelete("{chatId}")]
-        public async Task<IActionResult> DeleteChat(int chatId)
+        public async Task<IActionResult> DeleteChat(string language, int chatId)
         {
             IActionResult response;
             try
@@ -253,13 +253,13 @@ namespace C_Chat_API.Controllers
 
                 if (chat == null)
                 {
-                    response = NotFound(Messages.Chat.NotFound);
+                    response = NotFound(Messages.Chat.NotFound[language]);
                 }
                 else
                 {
                     _dbContext.Chats.Remove(chat);
                     await _dbContext.SaveChangesAsync();
-                    response = Ok(Messages.Chat.Deleted);
+                    response = Ok(Messages.Chat.Deleted[language]);
                 }
             }
             catch (DbUpdateException ex)
@@ -270,7 +270,7 @@ namespace C_Chat_API.Controllers
         }
 
         [HttpDelete("LeaveChat/{chatId}")]
-        public async Task<IActionResult> DeleteLeaveChat(int chatId)
+        public async Task<IActionResult> DeleteLeaveChat(string language, int chatId)
         {
             IActionResult response;
             try
@@ -278,21 +278,21 @@ namespace C_Chat_API.Controllers
                 int? userId = await ControllerHelper.GetUserIdFromClaims(User);
                 if (userId == null)
                 {
-                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
                 }
                 else
                 {
                     User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
                     if (user == null)
                     {
-                        response = NotFound(Messages.User.NotFound);
+                        response = NotFound(Messages.User.NotFound[language]);
                     }
                     else
                     {
                         UserChat? userChat = await _dbContext.UserChats.FirstOrDefaultAsync(uc => uc.User.UserId == userId && uc.Chat.ChatId == chatId);
                         if (userChat == null)
                         {
-                            response = Unauthorized(Messages.UserChat.DontBelongToChat);
+                            response = Unauthorized(Messages.UserChat.DontBelongToChat[language]);
                         }
                         else
                         {
@@ -300,14 +300,14 @@ namespace C_Chat_API.Controllers
                             _dbContext.UserChats.Remove(userChat);
                             await _dbContext.SaveChangesAsync();
 
-                            response = Ok(Messages.UserChat.ChatLeaved);
+                            response = Ok(Messages.UserChat.ChatLeaved[language]);
                         }
                     }
                 }
             }
             catch (FormatException)
             {
-                response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
             }
             catch (Exception ex)
             {

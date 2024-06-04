@@ -13,7 +13,7 @@ using System.Security.Claims;
 
 namespace C_Chat_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/{language}/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -36,13 +36,13 @@ namespace C_Chat_API.Controllers
         }
 
         [HttpGet("{userId}")]
-        public async Task<IActionResult> GetUser(int userId)
+        public async Task<IActionResult> GetUser(string language, int userId)
         {
             IActionResult response;
             User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
             if (user == null)
             {
-                response = NotFound(Messages.User.NotFound);
+                response = NotFound(Messages.User.NotFound[language]);
             }
             else
             {
@@ -52,7 +52,7 @@ namespace C_Chat_API.Controllers
         }
 
         [HttpGet("UserData")]
-        public async Task<IActionResult> GetUser()
+        public async Task<IActionResult> GetUser(string language)
         {
             IActionResult response;
             try
@@ -60,14 +60,14 @@ namespace C_Chat_API.Controllers
                 int? userId = await ControllerHelper.GetUserIdFromClaims(User);
                 if (userId == null)
                 {
-                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
                 }
                 else
                 {
                     User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
                     if (user == null)
                     {
-                        response = NotFound(Messages.User.NotFound);
+                        response = NotFound(Messages.User.NotFound[language]);
                     }
                     else
                     {
@@ -77,7 +77,7 @@ namespace C_Chat_API.Controllers
             }
             catch (FormatException)
             {
-                response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
             }
             catch (Exception ex)
             {
@@ -102,18 +102,18 @@ namespace C_Chat_API.Controllers
 
         [HttpPost("SignUp")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> PostSignUp([FromForm] UserInsert incomingNewUser)
+        public async Task<IActionResult> PostSignUp(string language, [FromForm] UserInsert incomingNewUser)
         {
             IActionResult response;
             try
             {
                 if (UserInsert.isAnyFieldNullOrEmpty(incomingNewUser))
                 {
-                    response = BadRequest(Messages.Form.MissingFields);
+                    response = BadRequest(Messages.Form.MissingFields[language]);
                 }
                 else if (UserInsert.ArePasswordsDifferent(incomingNewUser))
                 {
-                    response = BadRequest(Messages.Form.PasswordsDoesntMatch);
+                    response = BadRequest(Messages.Form.PasswordsDoesntMatch[language]);
                 }
                 else
                 {
@@ -127,31 +127,30 @@ namespace C_Chat_API.Controllers
                     await _dbContext.Users.AddAsync(newUser);
                     await _dbContext.SaveChangesAsync();
 
-                    response = StatusCode(201, Messages.User.Registered);
+                    response = StatusCode(201, Messages.User.Registered[language]);
                 }
             } catch (DbUpdateException ex)
             {
-                response = ControllerHelper.HandleDbUpdateException(ex, true);
-
+                response = ControllerHelper.HandleDbUpdateException(ex, language, true);
             }
             return response;
         }
 
         [HttpPost("Login")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> PostLogin([FromForm] UserLogin IncomingLoginUser)
+        public async Task<IActionResult> PostLogin(string language, [FromForm] UserLogin IncomingLoginUser)
         {
             IActionResult response;
             User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email.Equals(IncomingLoginUser.Email));
             if (user == null)
             {
-                response = BadRequest(Messages.Form.IncorrectEmailOrPassword);
+                response = BadRequest(Messages.Form.IncorrectEmailOrPassword[language]);
             }
             else
             {
                 if (!user.Password.Equals(IncomingLoginUser.Password))
                 {
-                    response = BadRequest(Messages.Form.IncorrectEmailOrPassword);
+                    response = BadRequest(Messages.Form.IncorrectEmailOrPassword[language]);
                 }
                 else
                 {
@@ -182,7 +181,7 @@ namespace C_Chat_API.Controllers
         /* ---------- DELETE ---------- */
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteUser()
+        public async Task<IActionResult> DeleteUser(string language)
         {
             IActionResult response;
             try
@@ -190,7 +189,7 @@ namespace C_Chat_API.Controllers
                 int? userId = await ControllerHelper.GetUserIdFromClaims(User);
                 if (userId == null)
                 {
-                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
                 }
                 else
                 {
@@ -198,20 +197,20 @@ namespace C_Chat_API.Controllers
 
                     if (user == null)
                     {
-                        response = NotFound(Messages.User.NotFound);
+                        response = NotFound(Messages.User.NotFound[language]);
                     }
                     else
                     {
                         _dbContext.Users.Remove(user);
                         await _dbContext.SaveChangesAsync();
-                        response = Ok(Messages.User.Deleted);
+                        response = Ok(Messages.User.Deleted[language]);
                     }
                 }
                 
             }
             catch (FormatException)
             {
-                response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
+                response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
             }
             catch (DbUpdateException ex)
             {

@@ -12,7 +12,7 @@ namespace C_Chat_API.Helpers
             return userIdStr == null ? null : int.Parse(userIdStr);
         }
         
-        public static IActionResult HandleDbUpdateException(DbUpdateException ex, bool isForUser)
+        public static IActionResult HandleDbUpdateException(DbUpdateException ex, string language, bool isForUser)
         {
             IActionResult result;
             if (ex.InnerException is MySqlException mySqlException)
@@ -20,10 +20,10 @@ namespace C_Chat_API.Helpers
                 switch (mySqlException.ErrorCode.ToString())
                 {
                     case "DuplicateKeyEntry":
-                        result = new BadRequestObjectResult( isForUser ? Messages.User.AlreadyExists : Messages.Chat.AlreadyExists );
+                        result = new BadRequestObjectResult( isForUser ? Messages.User.AlreadyExists[language] : Messages.Chat.AlreadyExists[language] );
                         break;
                     case "ColumnCannotBeNull":
-                        result = new BadRequestObjectResult(Messages.Form.MissingFields);
+                        result = new BadRequestObjectResult(Messages.Form.MissingFields[language]);
                         break;
                     default:
                         result = new BadRequestObjectResult(ex.Message);

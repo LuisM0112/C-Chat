@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
   providedIn: 'root'
 })
 export class CChatService {
-  private API_URL: string = 'https://localhost:7201/api';
+  private API_URL: string = 'https://localhost:7201/api/es';
   private TOKEN_ITEM: string = 'C-ChatToken';
   private USER_ITEM: string = 'C-ChatUserName';
 

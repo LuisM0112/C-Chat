@@ -3,7 +3,7 @@
     {{selectedChat.name ? '> '+selectedChat.name : '✕ Chat not selected'}}
     @if (selectedChat.name) {
       <button type="menu" id="btn-add-user" (click)="cchatService.toggleModalForm('dialog-add-user', true)">Add user</button>
-      <button type="menu" id="btn-delete-chat" (click)="cchatService.deleteChat(selectedChat.chatId)">Delete chat</button>
+      <button type="menu" id="btn-delete-chat" (click)="cchatService.toggleModalForm('dialog-confirmation-delete-chat', true)">Delete chat</button>
       <button type="menu" id="btn-show-members" (click)="cchatService.toggleModalForm('dialog-chat-members', true)">View users</button>
     }
   </h3>
@@ -32,5 +32,8 @@
   </dialog>
   <dialog id="dialog-chat-members">
     <app-chat-members-list (closeDialog)="cchatService.toggleModalForm('dialog-chat-members', false)" />
+  </dialog>
+  <dialog id="dialog-confirmation-delete-chat">
+    <app-confirmation-prompt [text]="'delete this chat'" [func]="deleteChat" (closeDialog)="cchatService.toggleModalForm('dialog-confirmation-delete-chat', false)" />
   </dialog>
 }

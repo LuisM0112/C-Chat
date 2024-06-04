@@ -6,5 +6,8 @@
 </ul>
 <div class="btn-wraper">
   <button class="btn-preferential" id="btn-close-modal" (click)="closeModal()">Close</button>
-  <button id="btn-leave-chat" (click)="leaveChat()">Leave chat</button>
+  <button id="btn-leave-chat" (click)="cchatService.toggleModalForm('dialog-confirmation-leave-chat', true)">Leave chat</button>
 </div>
+<dialog id="dialog-confirmation-leave-chat">
+  <app-confirmation-prompt [text]="'leave this chat'" [func]="leaveChat" (closeDialog)="cchatService.toggleModalForm('dialog-confirmation-leave-chat', false)" />
+</dialog>

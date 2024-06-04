@@ -2,13 +2,14 @@ import { Component, EffectRef, EventEmitter, OnDestroy, OnInit, Output, effect }
 import { CChatService } from '../../services/c-chat.service';
 import { User } from '../../model/classes/user';
 import { SearchBarComponent } from "../search-bar/search-bar.component";
+import { ConfirmationPromptComponent } from "../confirmation-prompt/confirmation-prompt.component";
 
 @Component({
   selector: 'app-chat-members-list',
   standalone: true,
   templateUrl: './chat-members-list.component.html',
   styleUrl: './chat-members-list.component.css',
-  imports: [SearchBarComponent]
+  imports: [SearchBarComponent, ConfirmationPromptComponent]
 })
 export class ChatMembersListComponent implements OnInit, OnDestroy{
 
@@ -33,8 +34,8 @@ export class ChatMembersListComponent implements OnInit, OnDestroy{
     this.filter = event;    
   }
 
-  public leaveChat(): void {
-    this.cchatService.deleteLeaveChat();
+  public leaveChat = (): Promise<void> => {
+    return this.cchatService.deleteLeaveChat();
   }
   
   public closeModal(): void {

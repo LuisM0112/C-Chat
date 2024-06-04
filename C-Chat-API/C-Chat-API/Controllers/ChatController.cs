@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using System.Text.Json;
-using MySqlConnector;
+using Microsoft.IdentityModel.Tokens;
 
 namespace C_Chat_API.Controllers
 {
@@ -52,14 +52,13 @@ namespace C_Chat_API.Controllers
             IActionResult response;
             try
             {
-                string? userIdstr = User?.FindFirst("id")?.Value;
-                if (userIdstr == null)
+                int? userId = await ControllerHelper.GetUserIdFromClaims(User);
+                if (userId == null)
                 {
                     response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
                 }
                 else
                 {
-                    int userId = Int32.Parse(userIdstr);
                     User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
                     if (user == null)
                     {
@@ -123,18 +122,21 @@ namespace C_Chat_API.Controllers
             IActionResult response;
             try
             {
-                string? userIdstr = User?.FindFirst("id")?.Value;
-                if (userIdstr == null)
+                int? userId = await ControllerHelper.GetUserIdFromClaims(User);
+                if (userId == null)
                 {
                     response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
                 }
                 else
                 {
-                    int userId = Int32.Parse(userIdstr);
                     User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
                     if (user == null)
                     {
                         response = NotFound(Messages.User.NotFound);
+                    }
+                    else if (incomingNewChat.Name.IsNullOrEmpty())
+                    {
+                        response = BadRequest(Messages.Form.MissingFields);
                     }
                     else
                     {
@@ -167,27 +169,7 @@ namespace C_Chat_API.Controllers
             }
             catch (DbUpdateException ex)
             {
-                if (ex.InnerException == null)
-                {
-                    response = BadRequest(ex.Message);
-                }
-                else
-                {
-                    MySqlException mySqlException = (MySqlException)ex.InnerException;
-
-                    if (mySqlException.ErrorCode.ToString().Equals("DuplicateKeyEntry"))
-                    {
-                        response = BadRequest(Messages.Chat.AlreadyExists);
-                    }
-                    else if (mySqlException.ErrorCode.ToString().Equals("ColumnCannotBeNull"))
-                    {
-                        response = BadRequest(Messages.Form.MissingFields);
-                    }
-                    else
-                    {
-                        response = BadRequest(mySqlException.Message);
-                    }
-                }
+                response = ControllerHelper.HandleDbUpdateException(ex, false);
             }
             return response;
         }
@@ -198,14 +180,13 @@ namespace C_Chat_API.Controllers
             IActionResult response;
             try
             {
-                string? userIdstr = User?.FindFirst("id")?.Value;
-                if (userIdstr == null)
+                int? userId = await ControllerHelper.GetUserIdFromClaims(User);
+                if (userId == null)
                 {
                     response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
                 }
                 else
                 {
-                    int userId = Int32.Parse(userIdstr);
                     User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
                     if (user == null)
                     {
@@ -294,14 +275,13 @@ namespace C_Chat_API.Controllers
             IActionResult response;
             try
             {
-                string? userIdstr = User?.FindFirst("id")?.Value;
-                if (userIdstr == null)
+                int? userId = await ControllerHelper.GetUserIdFromClaims(User);
+                if (userId == null)
                 {
                     response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
                 }
                 else
                 {
-                    int userId = Int32.Parse(userIdstr);
                     User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
                     if (user == null)
                     {
@@ -344,14 +324,13 @@ namespace C_Chat_API.Controllers
             IActionResult response;
             try
             {
-                string? userIdstr = User?.FindFirst("id")?.Value;
-                if (userIdstr == null)
+                int? userId = await ControllerHelper.GetUserIdFromClaims(User);
+                if (userId == null)
                 {
                     response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
                 }
                 else
                 {
-                    int userId = Int32.Parse(userIdstr);
                     User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
                     if (user == null)
                     {

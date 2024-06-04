@@ -22,8 +22,15 @@ public class Program
 
         builder.Services.AddSingleton<FileService>();
 
-        var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
-        builder.Services.AddDbContext<ChatContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+        try
+        {
+            var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
+            builder.Services.AddDbContext<ChatContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
 
         // builder.Services.AddScoped<ChatContext>();
 

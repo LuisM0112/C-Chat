@@ -23,4 +23,11 @@ export class LogInComponent {
   public async logIn(): Promise<void> {
     const response = await this.cchatService.postLogIn(this.userData);
   }
+
+  public reset(): void {
+    this.userData = {
+      email: '',
+      password: ''
+    };
+  }
 }

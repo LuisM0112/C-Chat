@@ -26,4 +26,13 @@ export class SignUpComponent {
     const response = await this.cchatService.postSignUp(this.userData);
     console.log(response);
   }
+
+  public reset(): void {
+    this.userData = {
+      userName: '',
+      email: '',
+      password: '',
+      passwordBis: ''
+    };
+  }
 }

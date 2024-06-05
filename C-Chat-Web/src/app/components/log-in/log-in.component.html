@@ -19,6 +19,6 @@
   />
   <div class="btn-wraper">
     <button class="btn-preferential" type="submit" (click)="logIn()">{{strings.Buttons.Login[cchatService.getLanguage()]}}</button>
-    <button type="reset">{{strings.Buttons.Reset[cchatService.getLanguage()]}}</button>
+    <button type="reset" (click)="reset()">{{strings.Buttons.Reset[cchatService.getLanguage()]}}</button>
   </div>
 </form>

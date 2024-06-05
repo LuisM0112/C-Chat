@@ -64,11 +64,49 @@
 - 5 de mayo de 2024 (Frontend): Formulario para añadir usuarios al chat.
 - 8 de mayo de 2024: Actualización del Readme.
 - 9 de mayo de 2024: Arreglos al añadir un usuario al chat y actualización del Readme.
+- 15 de mayo de 2024 (Frontend):
+  - Añadida lista de usuarios del chat.
+  - Añadidos botones para borrar el usuario, abandonar y eliminar un chat.
+  - Añadida barra de busqueda para la lista de chats.
+  - Refactorización de BehaviorSubject a Signals.
+- 16 de mayo de 2024 (Frontend): Barra de busqueda para la lista de usuarios de un chat.
+- 25 de mayo de 2024 (Backend y Frontend):
+  - Añadida capacided de enviar mensajes, los recibirán todos los usuarios pertenecientes al chat.
+  - Al seleccionar los chats se recibirán los mensajes anteriores.
+  - Añadidos scrolls para la lista de chats y el area del chat.
+- 27 de mayo de 2024 (Base de datos): Migración de la base de datos a MySQL (Mensajes de error rotos).
+- 28 de mayo de 2024 (Backend y Frontend): mensajes de error areglados, refactor de mensaje de Subjet a Signal y eliminados archivos no utilizados.
+- 29 de mayo de 2024 (Frontend):
+  - Scroll automático cuando un mensaje llega y cambios en el grid.
+  - Al pulsar enter se envia el mensaje escrito.
+  - Añadida responsividad básica.
+  - Añadida accesibilidad con propiedades de HTML.
+  - Añadidos botones de reset para las vistas de autenticación.
+  - Añadida diferenciación a los botones preferentes, es decir, aquellos que pulsarías preferentemente y evitar posibles accidentes en lo que el usuario desea hacer.
+-  1 de junio de 2024 (Backend y Frontend):
+  -  Arreglos en la responisvidad.
+  -  Instalación de la librería Toastr para notificaciones tipo toast.
+  -  Añadidas notificaciones con Toastr.
+  -  Añadido endpoint para determinar si el usuario es adminsitrador.
+-  2 de junio de 2024 (Backend y Frontend):
+  -  DB Seeder con un usuairo administrador.
+  -  Refactorización y vista administrador.
+  -  Manejo de errores globales e intercepción de errores HTTP.
+  -  Añadido servicio para archivos estáticos.
+-  3 de junio de 2024 (Frontend):
+  -  Añadida PWA.
+  -  Mejora vista de administrador.
+  -  Añadidos scrloss para el resto de listas.
+-  4 de junio de 2024 (Backend y Frontend):
+  -  Refatorización en los controladores.
+  -  Dialogo de confirmación para acciones irreversibles.
+  -  Traducción de los mensajes devueltos por la API.
+-  5 de junio de 2024 (Frontend): Traducción de la web y actualización del README.
 
 ---
 # C-Chat-Web
 
-Ptoyecto creado con [Angular CLI](https://github.com/angular/angular-cli) versión 17.1.1.
+Ptoyecto creado con [Angular CLI](https://github.com/angular/angular-cli) versión 18.0.1.
 
 ## Servidor de desarrollo
 
@@ -78,6 +116,6 @@ Ejecuta el comando `ng serve` para lanzar el servidor de desarrollo. En la ruta 
 
 Ejecuta el comando `ng build` para compilar el proyecto. Los archivos se almacenarán en el directorio `dist/`.
 
-## Ejecución de test
+## Servidor de producción
 
-Ejecuta el comando `ng test` para ejecutar los test unitarios vía [Karma](https://karma-runner.github.io).
+Ejecuta el comando `npx http-server -p 8080 -c-1 dist/c-chat-web/browser` para lanzar un servidor HTTP en la ruta `http://localhost:8080/`. Pudiendo así hacer uso de la PWA.

@@ -83,25 +83,25 @@
   - Añadida accesibilidad con propiedades de HTML.
   - Añadidos botones de reset para las vistas de autenticación.
   - Añadida diferenciación a los botones preferentes, es decir, aquellos que pulsarías preferentemente y evitar posibles accidentes en lo que el usuario desea hacer.
--  1 de junio de 2024 (Backend y Frontend):
-  -  Arreglos en la responisvidad.
-  -  Instalación de la librería Toastr para notificaciones tipo toast.
-  -  Añadidas notificaciones con Toastr.
-  -  Añadido endpoint para determinar si el usuario es adminsitrador.
--  2 de junio de 2024 (Backend y Frontend):
-  -  DB Seeder con un usuairo administrador.
-  -  Refactorización y vista administrador.
-  -  Manejo de errores globales e intercepción de errores HTTP.
-  -  Añadido servicio para archivos estáticos.
--  3 de junio de 2024 (Frontend):
-  -  Añadida PWA.
-  -  Mejora vista de administrador.
-  -  Añadidos scrloss para el resto de listas.
--  4 de junio de 2024 (Backend y Frontend):
-  -  Refatorización en los controladores.
-  -  Dialogo de confirmación para acciones irreversibles.
-  -  Traducción de los mensajes devueltos por la API.
--  5 de junio de 2024 (Frontend): Traducción de la web y actualización del README.
+- 1 de junio de 2024 (Backend y Frontend):
+  - Arreglos en la responisvidad.
+  - Instalación de la librería Toastr para notificaciones tipo toast.
+  - Añadidas notificaciones con Toastr.
+  - Añadido endpoint para determinar si el usuario es adminsitrador.
+- 2 de junio de 2024 (Backend y Frontend):
+  - DB Seeder con un usuairo administrador.
+  - Refactorización y vista administrador.
+  - Manejo de errores globales e intercepción de errores HTTP.
+  - Añadido servicio para archivos estáticos.
+- 3 de junio de 2024 (Frontend):
+  - Añadida PWA.
+  - Mejora vista de administrador.
+  - Añadidos scrloss para el resto de listas.
+- 4 de junio de 2024 (Backend y Frontend):
+  - Refatorización en los controladores.
+  - Dialogo de confirmación para acciones irreversibles.
+  - Traducción de los mensajes devueltos por la API.
+- 5 de junio de 2024 (Frontend): Traducción de la web y actualización del README.
 
 ---
 # C-Chat-Web

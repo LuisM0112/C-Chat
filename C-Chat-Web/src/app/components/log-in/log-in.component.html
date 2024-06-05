@@ -1,6 +1,6 @@
 <form>
   <h2>
-    Log in
+    {{strings.Buttons.Login[cchatService.getLanguage()]}}
     <hr>
   </h2>
   <b>Email</b>
@@ -10,15 +10,15 @@
     name="email"
     placeholder="Email"
   />
-  <b>Password</b>
+  <b>{{strings.Placeholder.Password[cchatService.getLanguage()]}}</b>
   <input
     type="password"
     [(ngModel)]="userData.password"
     name="password"
-    placeholder="Password"
+    placeholder={{strings.Placeholder.Password[cchatService.getLanguage()]}}
   />
   <div class="btn-wraper">
-    <button class="btn-preferential" type="submit" (click)="logIn()">Log in</button>
-    <button type="reset">Reset</button>
+    <button class="btn-preferential" type="submit" (click)="logIn()">{{strings.Buttons.Login[cchatService.getLanguage()]}}</button>
+    <button type="reset">{{strings.Buttons.Reset[cchatService.getLanguage()]}}</button>
   </div>
 </form>

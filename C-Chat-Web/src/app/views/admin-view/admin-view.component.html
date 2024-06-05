@@ -1,6 +1,6 @@
 <div id="lists-container">
   <div id="users-list">
-    <h3>Users</h3>
+    <h3>{{strings.Admin.Users[cchatService.getLanguage()]}}</h3>
     <app-search-bar (filterText)="updateUserFilter($event)" />
     <ul>
       @for (user of cchatService.getListFiltered(userList, userFilter); track $index) {
@@ -19,4 +19,5 @@
     </ul>
   </div>
 </div>
-<button type="menu" (click)="closeForm()">Close</button>
+<button type="menu" (click)="closeForm()">
+  {{strings.Buttons.Close[cchatService.getLanguage()]}}</button>

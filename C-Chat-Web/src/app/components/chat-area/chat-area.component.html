@@ -1,39 +1,46 @@
 <div id="chat-area-container">
   <h3>
-    {{selectedChat.name ? '> '+selectedChat.name : '✕ Chat not selected'}}
+    {{selectedChat.name ? '> '+selectedChat.name : strings.ChatArea.NotSelected[cchatService.getLanguage()]}}
     @if (selectedChat.name) {
-      <button type="menu" id="btn-add-user" (click)="cchatService.toggleModalForm('dialog-add-user', true)">Add user</button>
-      <button type="menu" id="btn-delete-chat" (click)="cchatService.toggleModalForm('dialog-confirmation-delete-chat', true)">Delete chat</button>
-      <button type="menu" id="btn-show-members" (click)="cchatService.toggleModalForm('dialog-chat-members', true)">View users</button>
+    <button type="menu" id="btn-add-user" (click)="cchatService.toggleModalForm('dialog-add-user', true)">
+      {{strings.Buttons.AddUser[cchatService.getLanguage()]}}</button>
+    <button type="menu" id="btn-delete-chat"
+      (click)="cchatService.toggleModalForm('dialog-confirmation-delete-chat', true)">
+      {{strings.Buttons.DeleteChat[cchatService.getLanguage()]}}</button>
+    <button type="menu" id="btn-show-members" (click)="cchatService.toggleModalForm('dialog-chat-members', true)">
+      {{strings.Buttons.ViewUsers[cchatService.getLanguage()]}}</button>
     }
   </h3>
   <div id="chat-container" #chatContainer>
     @for (message of messages; track $index) {
-      <div class="message-container {{cchatService.userName == message.author ? 'self' : 'other'}}">
-        <div class="message">
-          <span class="message-info">
-            {{message.author}} - {{message.date.slice(11)}}
-          </span>
-          <span class="message-content">
-            {{message.content}}
-          </span>
-        </div>
+    <div class="message-container {{cchatService.userName == message.author ? 'self' : 'other'}}">
+      <div class="message">
+        <span class="message-info">
+          {{message.author}} - {{message.date.slice(11)}}
+        </span>
+        <span class="message-content">
+          {{message.content}}
+        </span>
       </div>
+    </div>
     }
   </div>
   <div id="input-container">
-    <input type="text" id="input-message" [(ngModel)]="inputText" placeholder="⌨️ Type here..." (keydown.enter)="sendMessage()">
-    <button type="submit" id="btn-send" (click)="sendMessage()">Send</button>
+    <input type="text" id="input-message" [(ngModel)]="inputText"
+      placeholder={{strings.Placeholder.TypeHere[cchatService.getLanguage()]}} (keydown.enter)="sendMessage()">
+    <button type="submit" id="btn-send" (click)="sendMessage()">
+      {{strings.Buttons.Send[cchatService.getLanguage()]}}</button>
   </div>
 </div>
 @if (selectedChat.name) {
-  <dialog id="dialog-add-user">
-    <app-add-user-form (closeDialog)="cchatService.toggleModalForm('dialog-add-user', false)" />
-  </dialog>
-  <dialog id="dialog-chat-members">
-    <app-chat-members-list (closeDialog)="cchatService.toggleModalForm('dialog-chat-members', false)" />
-  </dialog>
-  <dialog id="dialog-confirmation-delete-chat">
-    <app-confirmation-prompt [text]="'delete this chat'" [func]="deleteChat" (closeDialog)="cchatService.toggleModalForm('dialog-confirmation-delete-chat', false)" />
-  </dialog>
+<dialog id="dialog-add-user">
+  <app-add-user-form (closeDialog)="cchatService.toggleModalForm('dialog-add-user', false)" />
+</dialog>
+<dialog id="dialog-chat-members">
+  <app-chat-members-list (closeDialog)="cchatService.toggleModalForm('dialog-chat-members', false)" />
+</dialog>
+<dialog id="dialog-confirmation-delete-chat">
+  <app-confirmation-prompt [text]="strings.Confirmation.DeleteChat[cchatService.getLanguage()]" [func]="deleteChat"
+    (closeDialog)="cchatService.toggleModalForm('dialog-confirmation-delete-chat', false)" />
+</dialog>
 }

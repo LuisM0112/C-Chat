@@ -9,7 +9,8 @@
       <li (click)="selectChat(chat)">{{ chat.name }}</li>
     }
   </ul>
-  <button id="btn-new-chat" (click)="cchatService.toggleModalForm('dialog-new-chat', true)">New chat</button>
+  <button id="btn-new-chat" (click)="cchatService.toggleModalForm('dialog-new-chat', true)">
+  {{strings.Buttons.NewChat[cchatService.getLanguage()]}}</button>
 </div>
 <dialog id="dialog-new-chat">
   <app-create-chat-form (closeDialog)="cchatService.toggleModalForm('dialog-new-chat', false)" />

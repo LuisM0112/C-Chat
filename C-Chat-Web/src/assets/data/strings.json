@@ -1,0 +1,150 @@
+{
+  "Login": {
+    "en": "User logged in!",
+    "es": "Sesión iniciada!"
+  },
+  "Logout": {
+    "en": "Logged out",
+    "es": "Sesión cerrada"
+  },
+  "Auth": {
+    "Name": {
+      "en": "Name",
+      "es": "Nombre"
+    },
+    "AlreadyHaveAccount": {
+      "en": "I already have an account",
+      "es": "Ya tengo una cuenta"
+    },
+    "DontHaveAccount": {
+      "en": "I don't have an account",
+      "es": "No tengo una cuenta"
+    },
+    "Login": {
+      "en": "log in",
+      "es": "iniciar sesión"
+    },
+    "Signup": {
+      "en": "sign up",
+      "es": "registrarse"
+    }
+  },
+  "ChatArea": {
+    "NotSelected": {
+      "en": "✕ Chat not selected",
+      "es": "✕ Chat no seleccionado"
+    }
+  },
+  "Admin": {
+    "Users": {
+      "en": "Users",
+      "es": "Usuarios"
+    }
+  },
+  "Confirmation": {
+    "Sure": {
+      "en": "Are you sure?",
+      "es": "¿Estas seguro?"
+    },
+    "SureYouWant": {
+      "en": "Are you sure you want to",
+      "es": "¿Estas seguro que quieres"
+    },
+    "DeleteAccount": {
+      "en": "delete your account",
+      "es": "borrar tu cuenta"
+    },
+    "LeaveChat": {
+      "en": "leave the chat",
+      "es": "abandonar el chat"
+    },
+    "DeleteChat": {
+      "en": "delete the chat",
+      "es": "eliminar el chat"
+    }
+  },
+  "Placeholder":{
+    "Password": {
+      "en": "Password",
+      "es": "Contraseña"
+    },
+    "RepeatPassword": {
+      "en": "Repeat password",
+      "es": "Repetir contraseña"
+    },
+    "Search": {
+      "en": "Search...",
+      "es": "Buscar..."
+    },
+    "TypeHere": {
+      "en": "⌨️ Type here...",
+      "es": "⌨️ Escribe aquí..."
+    },
+    "UserName": {
+      "en": "User name",
+      "es": "Nombre del usuario"
+    },
+    "ChatName": {
+      "en": "Chat name",
+      "es": "Nombre del chat"
+    }
+  },
+  "Buttons": {
+    "Cancel": {
+      "en": "Cancel",
+      "es": "Cancelar"
+    },
+    "Close": {
+      "en": "Close",
+      "es": "Cerrar"
+    },
+    "Reset": {
+      "en": "Reset",
+      "es": "Limpiar"
+    },
+    "Confirm": {
+      "en": "Confirm",
+      "es": "Confirmar"
+    },
+    "Send": {
+      "en": "Send",
+      "es": "Enviar"
+    },
+    "Login": {
+      "en": "Log in",
+      "es": "Iniciar sesión"
+    },
+    "Logout": {
+      "en": "Log out",
+      "es": "Cerrar sesión"
+    },
+    "Signup": {
+      "en": "Sign up",
+      "es": "Registrarse"
+    },
+    "DeleteAccount": {
+      "en": "Delete account",
+      "es": "Borrar cuenta"
+    },
+    "AddUser": {
+      "en": "Add user",
+      "es": "Añadir usuario"
+    },
+    "NewChat": {
+      "en": "New chat",
+      "es": "Nuevo chat"
+    },
+    "DeleteChat": {
+      "en": "Delete chat",
+      "es": "Borrar chat"
+    },
+    "LeaveChat": {
+      "en": "Leave chat",
+      "es": "Abandonar chat"
+    },
+    "ViewUsers": {
+      "en": "View users",
+      "es": "Ver usuarios"
+    }
+  }
+}

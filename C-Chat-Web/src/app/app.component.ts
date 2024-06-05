@@ -14,4 +14,8 @@ export class AppComponent {
 
   constructor(public cchatservice: CChatService){}
 
+  onChange(language: any) {
+    this.cchatservice.setLanguage(language.target.value);
+  }
+
 }

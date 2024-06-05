@@ -3,6 +3,7 @@ import { User } from '../../model/classes/user';
 import { CChatService } from '../../services/c-chat.service';
 import { Chat } from '../../model/classes/chat';
 import { SearchBarComponent } from "../../components/search-bar/search-bar.component";
+import * as strings from "../../../assets/data/strings.json";
 
 @Component({
     selector: 'app-admin-view',
@@ -12,6 +13,7 @@ import { SearchBarComponent } from "../../components/search-bar/search-bar.compo
     imports: [SearchBarComponent]
 })
 export class AdminViewComponent implements OnInit {
+  strings: any = strings;
 
   @Output() closeDialog: EventEmitter<void> = new EventEmitter<void>();
 

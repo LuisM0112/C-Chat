@@ -4,5 +4,16 @@
   } @else {
     <app-log-in />
   }
-  <p id="toggleDialogText" (click)="toggleDialog()">{{showSignUpDialog ? "I already have an account" : "I don't have an account"}}, <u>{{showSignUpDialog ? "log in" : "sign up"}}</u></p>
+  <p id="toggleDialogText" (click)="toggleDialog()">{{
+      showSignUpDialog
+      ? strings.Auth.AlreadyHaveAccount[cchatservice.getLanguage()]
+      : strings.Auth.DontHaveAccount[cchatservice.getLanguage()]
+    }},
+    <u>{{
+      showSignUpDialog
+      ? strings.Auth.Login[cchatservice.getLanguage()]
+      : strings.Auth.Signup[cchatservice.getLanguage()]
+      }}
+    </u>
+  </p>
 </dialog>

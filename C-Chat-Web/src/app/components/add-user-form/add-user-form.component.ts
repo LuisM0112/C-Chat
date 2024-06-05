@@ -3,6 +3,7 @@ import { CChatService } from '../../services/c-chat.service';
 import { FormsModule } from '@angular/forms';
 import { Chat } from '../../model/classes/chat';
 import { UserChatInsert } from '../../model/classes/user-chat-insert';
+import * as strings from "../../../assets/data/strings.json";
 
 @Component({
   selector: 'app-add-user-form',
@@ -12,6 +13,7 @@ import { UserChatInsert } from '../../model/classes/user-chat-insert';
   styleUrl: './add-user-form.component.css'
 })
 export class AddUserFormComponent implements OnDestroy {
+  strings: any = strings;
   
   private effectRef: EffectRef;
 

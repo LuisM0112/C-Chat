@@ -1,13 +1,15 @@
 <div id="menu-container">
   <img id="app-icon" src="./../../../favicon.ico" alt="App icon">
   <div>
-    <button type="menu" id="btn-log-out" (click)="cchatService.logOut()">Log out</button>
-    <button type="menu" id="btn-delete-account" (click)="cchatService.toggleModalForm('dialog-confirmation-delete-user', true)">Delete account</button>
+    <button type="menu" id="btn-log-out" (click)="cchatService.logOut()">
+    {{strings.Buttons.Logout[cchatService.getLanguage()]}}</button>
+    <button type="menu" id="btn-delete-account" (click)="cchatService.toggleModalForm('dialog-confirmation-delete-user', true)">
+    {{strings.Buttons.DeleteAccount[cchatService.getLanguage()]}}</button>
     @if (cchatService.isUserAdmin) {
       <button type="menu" id="btn-show-admin" (click)="cchatService.toggleModalForm('dialog-admin-view', true)">Admin</button>
     }
   </div>
 </div>
 <dialog id="dialog-confirmation-delete-user">
-  <app-confirmation-prompt [text]="'delete your account'" [func]="deleteUser" (closeDialog)="cchatService.toggleModalForm('dialog-confirmation-delete-user', false)" />
+  <app-confirmation-prompt [text]="strings.Confirmation.DeleteAccount[cchatService.getLanguage()]" [func]="deleteUser" (closeDialog)="cchatService.toggleModalForm('dialog-confirmation-delete-user', false)" />
 </dialog>

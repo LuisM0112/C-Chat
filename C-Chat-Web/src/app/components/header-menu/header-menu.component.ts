@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CChatService } from '../../services/c-chat.service';
 import { ConfirmationPromptComponent } from "../confirmation-prompt/confirmation-prompt.component";
+import * as strings from "../../../assets/data/strings.json";
 
 @Component({
   selector: 'app-header-menu',
@@ -10,6 +11,7 @@ import { ConfirmationPromptComponent } from "../confirmation-prompt/confirmation
   imports: [ConfirmationPromptComponent]
 })
 export class HeaderMenuComponent {
+  strings: any = strings;
 
   constructor(public cchatService: CChatService){}
 

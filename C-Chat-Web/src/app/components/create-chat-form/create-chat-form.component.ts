@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CChatService } from '../../services/c-chat.service';
+import * as strings from "../../../assets/data/strings.json";
 
 @Component({
   selector: 'app-create-chat-form',
@@ -10,6 +11,7 @@ import { CChatService } from '../../services/c-chat.service';
   styleUrl: './create-chat-form.component.css'
 })
 export class CreateChatFormComponent {
+  strings: any = strings;
 
   @Output() closeDialog: EventEmitter<void> = new EventEmitter<void>();
 

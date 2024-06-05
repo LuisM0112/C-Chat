@@ -1,14 +1,14 @@
 <form>
   <h2>
-    Sign up
+    {{strings.Buttons.Signup[cchatService.getLanguage()]}}
     <hr>
   </h2>
-  <b>Name</b>
+  <b>{{strings.Auth.Name[cchatService.getLanguage()]}}</b>
   <input
     type="text"
     [(ngModel)]="userData.userName"
     name="userName"
-    placeholder="User name"
+    placeholder={{strings.Placeholder.UserName[cchatService.getLanguage()]}}
   />
   <b>Email</b>
   <input
@@ -17,22 +17,22 @@
     name="email"
     placeholder="Email"
   />
-  <b>Password</b>
+  <b>{{strings.Placeholder.Password[cchatService.getLanguage()]}}</b>
   <input
     type="password"
     [(ngModel)]="userData.password"
     name="password"
-    placeholder="Password"
+    placeholder={{strings.Placeholder.Password[cchatService.getLanguage()]}}
   />
-  <b>Repeat password</b>
+  <b>{{strings.Placeholder.RepeatPassword[cchatService.getLanguage()]}}</b>
   <input
     type="password"
     [(ngModel)]="userData.passwordBis"
     name="passwordBis"
-    placeholder="Repeat password"
+    placeholder={{strings.Placeholder.RepeatPassword[cchatService.getLanguage()]}}
   />
   <div class="btn-wraper">
-    <button class="btn-preferential" type="submit" (click)="signUp()">Sign Up</button>
-    <button type="reset">Reset</button>
+    <button class="btn-preferential" type="submit" (click)="signUp()">{{strings.Buttons.Signup[cchatService.getLanguage()]}}</button>
+    <button type="reset">{{strings.Buttons.Reset[cchatService.getLanguage()]}}</button>
   </div>
 </form>

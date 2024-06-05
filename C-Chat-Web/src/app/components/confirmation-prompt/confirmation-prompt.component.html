@@ -1,6 +1,8 @@
-<h3>Are you sure?</h3>
-<p>Are you sure you want to {{text}}?</p>
+<h3>{{strings.Confirmation.Sure[cchatService.getLanguage()]}}</h3>
+<p>{{strings.Confirmation.SureYouWant[cchatService.getLanguage()]}} {{text}}?</p>
 <div class="btn-wraper">
-  <button class="btn-preferential" type="reset" (click)="closeForm()">Cancel</button>
-  <button type="submit" (click)="confirm()">Confirm</button>
+  <button class="btn-preferential" type="reset" (click)="closeForm()">
+    {{strings.Buttons.Close[cchatService.getLanguage()]}}</button>
+  <button type="submit" (click)="confirm()">
+    {{strings.Buttons.Confirm[cchatService.getLanguage()]}}</button>
 </div>

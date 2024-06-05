@@ -3,6 +3,7 @@ import { CChatService } from '../../services/c-chat.service';
 import { User } from '../../model/classes/user';
 import { SearchBarComponent } from "../search-bar/search-bar.component";
 import { ConfirmationPromptComponent } from "../confirmation-prompt/confirmation-prompt.component";
+import * as strings from "../../../assets/data/strings.json";
 
 @Component({
   selector: 'app-chat-members-list',
@@ -12,6 +13,7 @@ import { ConfirmationPromptComponent } from "../confirmation-prompt/confirmation
   imports: [SearchBarComponent, ConfirmationPromptComponent]
 })
 export class ChatMembersListComponent implements OnInit, OnDestroy{
+  strings: any = strings;
 
   @Output() closeDialog: EventEmitter<void> = new EventEmitter<void>();
   

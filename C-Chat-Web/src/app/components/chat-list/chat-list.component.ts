@@ -3,6 +3,7 @@ import { Chat } from '../../model/classes/chat';
 import { CChatService } from '../../services/c-chat.service';
 import { CreateChatFormComponent } from "../create-chat-form/create-chat-form.component";
 import { SearchBarComponent } from "../search-bar/search-bar.component";
+import * as strings from "../../../assets/data/strings.json";
 
 @Component({
   selector: 'app-chat-list',
@@ -12,6 +13,7 @@ import { SearchBarComponent } from "../search-bar/search-bar.component";
   imports: [CreateChatFormComponent, SearchBarComponent]
 })
 export class ChatListComponent implements OnInit, OnDestroy {
+  strings: any = strings;
 
   private effectRef: EffectRef;
   protected chatList: Chat[] = []

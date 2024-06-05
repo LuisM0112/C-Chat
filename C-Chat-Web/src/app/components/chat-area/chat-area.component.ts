@@ -7,6 +7,7 @@ import { ChatMembersListComponent } from "../chat-members-list/chat-members-list
 import { WebSocketService } from '../../services/web-socket.service';
 import { Message } from '../../model/classes/message';
 import { ConfirmationPromptComponent } from "../confirmation-prompt/confirmation-prompt.component";
+import * as strings from "../../../assets/data/strings.json";
 
 @Component({
   selector: 'app-chat-area',
@@ -16,7 +17,8 @@ import { ConfirmationPromptComponent } from "../confirmation-prompt/confirmation
   imports: [FormsModule, AddUserFormComponent, ChatMembersListComponent, ConfirmationPromptComponent]
 })
 export class ChatAreaComponent implements OnDestroy{
-
+  strings: any = strings;
+  
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
 
   selectedChat: Chat = new Chat();

@@ -1,7 +1,7 @@
 <input
   type="search"
   name="shearch-bar"
-  placeholder="Search..."
+  placeholder={{strings.Placeholder.Search[cchatService.getLanguage()]}}
   [(ngModel)]="inputText"
   (ngModelChange)="sendFilter()"
 />

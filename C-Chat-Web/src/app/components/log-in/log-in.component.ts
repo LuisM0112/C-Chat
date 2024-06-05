@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CChatService } from '../../services/c-chat.service';
+import * as strings from "../../../assets/data/strings.json";
 
 @Component({
   selector: 'app-log-in',
@@ -10,6 +11,7 @@ import { CChatService } from '../../services/c-chat.service';
   styleUrl: './log-in.component.css'
 })
 export class LogInComponent {
+  strings: any = strings;
 
   userData = {
     email: '',

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CChatService } from '../../services/c-chat.service';
 import { SignUpComponent } from "../../components/sign-up/sign-up.component";
 import { LogInComponent } from "../../components/log-in/log-in.component";
+import * as strings from "../../../assets/data/strings.json";
 
 @Component({
   selector: 'app-auth-view',
@@ -11,9 +12,9 @@ import { LogInComponent } from "../../components/log-in/log-in.component";
   imports: [SignUpComponent, LogInComponent]
 })
 export class AuthViewComponent implements OnInit {
+  strings: any = strings;
 
   showSignUpDialog: boolean = false;
-  toggleDialogText: string = "I don't have an account, sign up";
 
   constructor(public cchatservice: CChatService){}
 
@@ -24,6 +25,5 @@ export class AuthViewComponent implements OnInit {
   
   public toggleDialog(): void {
     this.showSignUpDialog = !this.showSignUpDialog;
-    this.showSignUpDialog ? this.toggleDialogText = "I already have an account, log in" : this.toggleDialogText = "I don't have an account, sign up"
   }
 }

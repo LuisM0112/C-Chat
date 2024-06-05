@@ -1,8 +1,10 @@
 <form>
-  <b>User name</b>
-  <input type="text" [(ngModel)]="userName" name="userName" placeholder="User name">
+  <b>{{strings.Placeholder.UserName[cchatService.getLanguage()]}}</b>
+  <input type="text" [(ngModel)]="userName" name="userName" placeholder={{strings.Placeholder.UserName[cchatService.getLanguage()]}}>
   <div class="btn-wraper">
-    <button class="btn-preferential" type="submit" (click)="addUser()">Confirm</button>
-    <button type="reset" (click)="closeForm()">Cancel</button>
+    <button class="btn-preferential" type="submit" (click)="addUser()">
+      {{strings.Buttons.Confirm[cchatService.getLanguage()]}}</button>
+    <button type="reset" (click)="closeForm()">
+      {{strings.Buttons.Cancel[cchatService.getLanguage()]}}</button>
   </div>
 </form>

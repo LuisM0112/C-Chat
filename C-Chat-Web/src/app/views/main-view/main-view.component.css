@@ -1,7 +1,7 @@
 #main-container {
   display: grid;
   grid-template-columns: 0.2fr 1fr;
-  grid-template-rows: 0.1fr 90vh;
+  grid-template-rows: 0.1fr 85vh;
   grid-column-gap: 5px;
   grid-row-gap: 5px;
 }

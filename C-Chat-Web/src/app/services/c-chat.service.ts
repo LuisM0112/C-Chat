@@ -28,9 +28,15 @@ export class CChatService {
   private language: string;
   public userName: string;
 
-  constructor(private httpClient: HttpClient, private toastr: ToastrService) { 
-    this.language = localStorage.getItem(this.LANGUAGE_ITEM) ?? 'en';
+  constructor(private httpClient: HttpClient, private toastr: ToastrService) {
+    this.language = localStorage.getItem(this.LANGUAGE_ITEM) ?? this.getDefaultLanguage(); // By default takes browser preferred language
     this.userName = localStorage.getItem(this.USER_ITEM) ?? '';
+  }
+
+  private getDefaultLanguage(): string {
+    const navLang: string = navigator.language.split("-")[0];
+    const supportedLanguages: Set<string> = new Set(["es", "en"]);
+    return supportedLanguages.has(navLang) ? navLang : "en";
   }
 
   public getLanguage(): string {

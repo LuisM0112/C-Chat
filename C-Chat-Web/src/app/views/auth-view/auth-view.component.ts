@@ -3,13 +3,14 @@ import { CChatService } from '../../services/c-chat.service';
 import { SignUpComponent } from "../../components/sign-up/sign-up.component";
 import { LogInComponent } from "../../components/log-in/log-in.component";
 import * as strings from "../../../assets/data/strings.json";
+import { LanguageSelectorComponent } from "../../components/language-selector/language-selector.component";
 
 @Component({
   selector: 'app-auth-view',
   standalone: true,
   templateUrl: './auth-view.component.html',
   styleUrl: './auth-view.component.css',
-  imports: [SignUpComponent, LogInComponent]
+  imports: [SignUpComponent, LogInComponent, LanguageSelectorComponent]
 })
 export class AuthViewComponent implements OnInit {
   strings: any = strings;

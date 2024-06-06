@@ -149,6 +149,7 @@ export class CChatService {
     const request = this.httpClient.post<string>(`${this.API_URL}/${this.language}/Auth/SignUp`, formData, this.getOptions());
     const response: any = await lastValueFrom(request);
     this.toastr.success(response);
+    await this.postLogIn({ email: userData.email, password: userData.password })
     return response;
   }
 

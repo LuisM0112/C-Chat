@@ -21,7 +21,7 @@ app-chat-area {
 @media only screen and (max-width: 768px) {
   #main-container {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto 80vmin;
+    grid-template-rows: auto auto 100vmin;
   }
   
   app-header-menu {

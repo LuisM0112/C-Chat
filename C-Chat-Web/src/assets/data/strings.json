@@ -1,4 +1,8 @@
 {
+  "Title": {
+    "en": "Welcome to",
+    "es": "Bienvenido a"
+  },
   "Login": {
     "en": "User logged in!",
     "es": "Sesión iniciada!"

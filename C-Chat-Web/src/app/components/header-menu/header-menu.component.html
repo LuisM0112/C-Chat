@@ -1,5 +1,14 @@
 <div id="menu-container">
-  <img id="app-icon" src="./../../../favicon.ico" alt="App icon">
+  <div class="container">
+    <div class="cube">
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face right"></div>
+        <div class="face left"></div>
+        <div class="face top"></div>
+        <div class="face bottom"></div>
+    </div>
+  </div>
   <div>
     <button type="menu" id="btn-log-out" (click)="cchatService.logOut()">
     {{strings.Buttons.Logout[cchatService.getLanguage()]}}</button>

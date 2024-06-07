@@ -47,11 +47,11 @@
   </tr>
   <tr>
     <td>Base de datos Codefirst</td>
-    <td><a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore"><strong>EntityFrameworkCore</strong></a></td>
+    <td><a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore"><strong>EntityFrameworkCore</strong></a> <br> <a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools"><strong>Microsoft.EntityFrameworkCore.Tools</strong></a></td>
   </tr>
   <tr>
     <td>Compatibilidad con MySQL</td>
-    <td><a href="https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySQL/"><strong>Pomelo.EntityFrameworkCore.MySql</strong></a> <br> <a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools"><strong>Microsoft.EntityFrameworkCore.Tools</strong></a></td>
+    <td><a href="https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySQL/"><strong>Pomelo.EntityFrameworkCore.MySql</strong></a></td>
   </tr>
   <tr>
     <td>Tokens de autorización</td>

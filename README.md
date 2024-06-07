@@ -9,6 +9,7 @@
 </p>
 
 <p align="center">
+  <a href="https://c-chat-omega.vercel.app"><strong>App Web</strong></a><br>
   <a href="https://aromatic-tray-733.notion.site/Anteproyecto-C-Chat-0ca065f5e301446fb2b774a35fcd57ec?pvs=4"><strong>Anteproyecto</strong></a>
   <br><br>
   <strong>Vídeo checkpoint</strong><br>
@@ -23,10 +24,46 @@
 
 ---
 
+<h2 align="center">Información sobre la aplicación</h2>
+<p align="center">
+  Web frontend realizada con <strong>Angular 18</strong>. Desplagada en <a href="https://vercel.com"><strong>Vercel</strong></a><br>
+  API realizada con <strong>ASP.NET Core .NET 8</strong>. Desplegada en <a href="https://admin.monsterasp.net"><strong>MonsterASP.net</strong></a><br>
+  Base de datos realizada con <strong>MySQL</strong>. Desplegada en <a href="https://admin.monsterasp.net"><strong>MonsterASP.net</strong></a><br>
+</p>
+<table align="center">
+  <tr>
+    <th colspan="2">Dependencias del proyecto Angular</th>
+  </tr>
+  <tr>
+    <td>Notificaciones toast</td>
+    <td><a href="https://www.npmjs.com/package/ngx-toastr"><strong>ngx-toastr</strong></a><br></td>
+  </tr>
+  <tr>
+    <td>PWA</td>
+    <td><a href="https://www.npmjs.com/package/@angular/pwa"><strong>@angular/pwa</strong></a></td>
+  </tr>
+  <tr>
+    <th colspan="2">Paquetes del proyecto ASP.NET Core</th>
+  </tr>
+  <tr>
+    <td>Base de datos Codefirst</td>
+    <td><a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore"><strong>EntityFrameworkCore</strong></a></td>
+  </tr>
+  <tr>
+    <td>Compatibilidad con MySQL</td>
+    <td><a href="https://www.nuget.org/packages/Pomelo.EntityFrameworkCore.MySQL/"><strong>Pomelo.EntityFrameworkCore.MySql</strong></a> <br> <a href="https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Tools"><strong>Microsoft.EntityFrameworkCore.Tools</strong></a></td>
+  </tr>
+  <tr>
+    <td>Tokens de autorización</td>
+    <td><a href="https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer/"><strong>JwtBearer</strong></a></td>
+  </tr>
+</table>
+
 <h2 align="center">
   Boceto de la vista principal
   <img src="images/C-Chat_sketch.webp" alt="Boceto-vista-principal" />
 </h2>
+
 <h2 align="center">
   Diagrama de la base de datos
   <img src="images/C-Chat_DBD.webp" alt="Diagrama-base-de-datos" />
@@ -101,7 +138,22 @@
   - Refatorización en los controladores.
   - Dialogo de confirmación para acciones irreversibles.
   - Traducción de los mensajes devueltos por la API.
-- 5 de junio de 2024 (Frontend): Traducción de la web y actualización del README.
+- 5 de junio de 2024 (Frontend):
+  - Traducción de la web, toma el lenguaje por defecto del navegador.
+  - Actualización del README.
+- 6 de junio de 2024:
+  - Mejora de la primera ventana que ve el usuario.
+  - Despliegue de la base de datos.
+- 7 de junio de 2024:
+  - Añadida autenticación para eliminar un chat.
+  - Añadida autorización de ADMIN para la lista de usuarios, de chats y el controlador de mensajes.
+  - Eliminados endpoints de prueba.
+  - Cambios en los mensajes de la consola.
+  - Despliegue del frontend.
+  - Despliegue del servidor.
+  - Cambios en las rutas.
+  - Mejoras en la responsividad.
+  - Actualización del README.
 
 ---
 # C-Chat-Web

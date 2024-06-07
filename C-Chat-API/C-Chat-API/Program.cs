@@ -66,17 +66,18 @@ public class Program
         }
 
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-
-            app.UseCors(config => config
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .SetIsOriginAllowed(origin => true)
-                            .AllowCredentials());
-        }
+        // if (app.Environment.IsDevelopment())
+        // {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+        
+        app.UseCors(config => config
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .SetIsOriginAllowed(origin => true)
+                        .AllowCredentials());
+        
+        // }
 
         app.UseHttpsRedirection();
         app.UseWebSockets();

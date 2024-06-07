@@ -6,7 +6,7 @@ import { Message } from '../model/classes/message';
 })
 export class WebSocketService {
 
-  private API_URL: string = 'https://localhost:7201';
+  private API_URL: string = 'https://c-chat.runasp.net';
   private TOKEN_ITEM: string = 'C-ChatToken';
   private socket!: WebSocket;
   public message: WritableSignal<Message> = signal(new Message("","","",""));

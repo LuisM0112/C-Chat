@@ -16,7 +16,7 @@ export class CChatService {
   private TOKEN_ITEM: string = 'C-ChatToken';
   private USER_ITEM: string = 'C-ChatUserName';
   private LANGUAGE_ITEM: string = 'C-ChatLanguage';
-  private API_URL: string = 'https://localhost:7201/api';
+  private API_URL: string = 'https://c-chat.runasp.net/api';
   
   isUserLogged: boolean = localStorage.getItem(this.TOKEN_ITEM) ? true : false;
   isUserAdmin: boolean = false;

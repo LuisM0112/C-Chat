@@ -32,7 +32,8 @@ export class CChatService {
     this.language = localStorage.getItem(this.LANGUAGE_ITEM) ?? this.getDefaultLanguage(); // By default takes browser preferred language
     this.userName = localStorage.getItem(this.USER_ITEM) ?? '';
   }
-
+  
+  /* |---------- Utility ----------| */
   private getDefaultLanguage(): string {
     const navLang: string = navigator.language.split("-")[0];
     const supportedLanguages: Set<string> = new Set(["es", "en"]);
@@ -47,8 +48,6 @@ export class CChatService {
     this.language = language;
     localStorage.setItem(this.LANGUAGE_ITEM, language);
   }
-  
-  /* |---------- Utility ----------| */
 
   public getOptions(): any {
     const token = localStorage.getItem(this.TOKEN_ITEM);
@@ -73,7 +72,9 @@ export class CChatService {
   /* |---------- Get ----------| */
 
   public async getUsers(): Promise<User[]> {
-    const request = this.httpClient.get<boolean>(`${this.API_URL}/${this.language}/Auth`).pipe(
+    const token = localStorage.getItem(this.TOKEN_ITEM);
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const request = this.httpClient.get<boolean>(`${this.API_URL}/${this.language}/Auth`, { headers }).pipe(
       map((response: any) => response.map(this.mapToUser))
     );
     const users: User[] = await lastValueFrom(request);
@@ -81,7 +82,9 @@ export class CChatService {
   }
 
   public async getChats(): Promise<Chat[]> {
-    const request = this.httpClient.get<boolean>(`${this.API_URL}/${this.language}/Chat`).pipe(
+    const token = localStorage.getItem(this.TOKEN_ITEM);
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const request = this.httpClient.get<boolean>(`${this.API_URL}/${this.language}/Chat`, { headers }).pipe(
       map((response: any) => response.map(this.mapToChat))
     );
     const chats: Chat[] = await lastValueFrom(request);
@@ -116,8 +119,10 @@ export class CChatService {
   }
 
   public async getUsersInChat(): Promise<void> {
+    const token = localStorage.getItem(this.TOKEN_ITEM);
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const chatId = this.selectedChat().chatId;
-    const request = this.httpClient.get(`${this.API_URL}/${this.language}/Chat/UsersInChat/${chatId}`).pipe(
+    const request = this.httpClient.get(`${this.API_URL}/${this.language}/Chat/UsersInChat/${chatId}`, { headers }).pipe(
       map((response: any) => response.map(this.mapToUser))
     );
     const users: User[] = await lastValueFrom(request);

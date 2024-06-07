@@ -4,6 +4,8 @@
   <app-chat-area />
 </div>
 <app-language-selector />
-<dialog id="dialog-admin-view">
-  <app-admin-view (closeDialog)="cchatService.toggleModalForm('dialog-admin-view', false)" />
-</dialog>
+@if (cchatService.isUserAdmin) {
+  <dialog id="dialog-admin-view">
+    <app-admin-view (closeDialog)="cchatService.toggleModalForm('dialog-admin-view', false)" />
+  </dialog>
+}

@@ -4,6 +4,7 @@ using C_Chat_API.Models.Clases;
 using C_Chat_API.Models.Dto;
 using C_Chat_API.Models.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -30,12 +31,14 @@ namespace C_Chat_API.Controllers
         /* ---------- GET ---------- */
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult<IEnumerable<UserDto>> GetUsers()
         {
             return _dbContext.Users.Select(UserDto.ToDto).ToList();
         }
 
         [HttpGet("{userId}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> GetUser(string language, int userId)
         {
             IActionResult response;

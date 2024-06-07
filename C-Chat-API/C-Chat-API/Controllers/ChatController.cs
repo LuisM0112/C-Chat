@@ -3,6 +3,7 @@ using C_Chat_API.Models;
 using C_Chat_API.Models.Clases;
 using C_Chat_API.Models.Dto;
 using C_Chat_API.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -23,12 +24,14 @@ namespace C_Chat_API.Controllers
         /* ---------- GET ---------- */
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult<IEnumerable<ChatDto>> GetChats()
         {
             return _dbContext.Chats.Select(ChatDto.ToDto).ToList();
         }
 
         [HttpGet("{chatId}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> GetChat(string language, int chatId)
         {
             IActionResult response;
@@ -88,16 +91,33 @@ namespace C_Chat_API.Controllers
             IActionResult response;
             try
             {
-                Chat? chat = await _dbContext.Chats.FirstOrDefaultAsync(c => c.ChatId == chatId);
-                if (chat == null)
+                int? userId = await ControllerHelper.GetUserIdFromClaims(User);
+                if (userId == null)
                 {
-                    response = NotFound(Messages.Chat.NotFound[language]);
+                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
                 }
                 else
                 {
-                    IEnumerable<User> users = await _dbContext.Users.Where(u => u.UsersChats.Any(uc => uc.Chat.ChatId == chatId)).ToListAsync();
-                    IEnumerable<UserDto> usersDto = users.Select(UserDto.ToDto);
-                    response = Ok(usersDto);
+                    User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+                    if (user == null)
+                    {
+                        response = NotFound(Messages.User.NotFound[language]);
+                    }
+                    else
+                    {
+                        UserChat? userChat = await _dbContext.UserChats.FirstOrDefaultAsync(uc => uc.User.UserId == userId && uc.Chat.ChatId == chatId);
+                        if (userChat == null)
+                        {
+                            response = Unauthorized(Messages.UserChat.DontBelongToChat[language]);
+                        }
+                        else
+                        {
+                            Chat? chat = await _dbContext.Chats.FirstOrDefaultAsync(c => c.ChatId == chatId);
+                            IEnumerable<User> users = await _dbContext.Users.Where(u => u.UsersChats.Any(uc => uc.Chat.ChatId == chatId)).ToListAsync();
+                            IEnumerable<UserDto> usersDto = users.Select(UserDto.ToDto);
+                            response = Ok(usersDto);
+                        }
+                    }
                 }
             }
             catch (Exception ex)

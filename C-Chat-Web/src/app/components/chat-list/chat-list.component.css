@@ -36,5 +36,6 @@ li:hover {
 @media only screen and (max-width: 768px) {
   ul {
     flex-direction: row;
+    overflow-x: auto;
   }
 }

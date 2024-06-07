@@ -62,4 +62,7 @@ form {
   hr {
     visibility: none;
   }
+  button {
+    font-size: smaller;
+  }
 }

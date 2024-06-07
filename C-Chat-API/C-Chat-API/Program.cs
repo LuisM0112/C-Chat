@@ -20,7 +20,7 @@ public class Program
         {
             options.AddPolicy(name: policyName, builder =>
             {
-                builder.WithOrigins("https://c-chat-omega.vercel.app")
+                builder.WithOrigins("http://localhost:4200")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();

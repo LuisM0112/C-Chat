@@ -35,7 +35,14 @@ li:hover {
 
 @media only screen and (max-width: 768px) {
   ul {
+    width: 90vw;
     flex-direction: row;
     overflow-x: auto;
+  }
+
+  li {
+    font-size: small;
+    width: max-content;
+    text-wrap: nowrap;
   }
 }

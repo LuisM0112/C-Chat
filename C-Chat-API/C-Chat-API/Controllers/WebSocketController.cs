@@ -32,7 +32,7 @@ namespace C_Chat_API.Controllers
             if (HttpContext.WebSockets.IsWebSocketRequest && id != 0)
             {
                 WebSocket? webSocket = await HttpContext.WebSockets.AcceptWebSocketAsync();
-                Console.WriteLine($"Conexíon establecida por un cliente con id: {id}, al chat con id: {chatId}");
+                Console.WriteLine($"Connection established by a client with id: {id}, to the chat with id: {chatId}");
                 await ConnectWebSocket(id, chatId, webSocket);
             }
             else
@@ -68,12 +68,12 @@ namespace C_Chat_API.Controllers
                 WebSocket removedWebSocket;
                 userSockets.TryRemove(userId, out removedWebSocket);
                 await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
-                Console.WriteLine($"Usuario desconectado del chat {chatId}");
+                Console.WriteLine($"User disconected from chat {chatId}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error en el WebSocket: {ex.Message}");
-                Console.WriteLine($"Error interno: {ex.InnerException}");
+                Console.WriteLine($"WebSocket error: {ex.Message}");
+                Console.WriteLine($"Internal error: {ex.InnerException}");
             }
         }
 
@@ -89,7 +89,7 @@ namespace C_Chat_API.Controllers
                 Chat = chat,
                 Date = DateTime.Now
             };
-            Console.WriteLine($"{user.Name} en {chat.Name}: {message}. {newMessage.Date}");
+            Console.WriteLine($"Message from {user.Name} on {chat.Name}. {newMessage.Date}");
             await _dbContext.Messages.AddAsync(newMessage);
             await _dbContext.SaveChangesAsync();
 

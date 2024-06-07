@@ -249,20 +249,37 @@ namespace C_Chat_API.Controllers
             IActionResult response;
             try
             {
-                Chat? chat = await _dbContext.Chats.FirstOrDefaultAsync(c => c.ChatId == chatId);
-
-                if (chat == null)
+                int? userId = await ControllerHelper.GetUserIdFromClaims(User);
+                if (userId == null)
                 {
-                    response = NotFound(Messages.Chat.NotFound[language]);
+                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
                 }
                 else
                 {
-                    _dbContext.Chats.Remove(chat);
-                    await _dbContext.SaveChangesAsync();
-                    response = Ok(Messages.Chat.Deleted[language]);
+                    User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+                    if (user == null)
+                    {
+                        response = NotFound(Messages.User.NotFound[language]);
+                    }
+                    else
+                    {
+                        UserChat? userChat = await _dbContext.UserChats.FirstOrDefaultAsync(uc => uc.User.UserId == userId && uc.Chat.ChatId == chatId);
+                        if (userChat == null)
+                        {
+                            response = Unauthorized(Messages.UserChat.DontBelongToChat[language]);
+                        }
+                        else
+                        {
+                            Chat? chat = await _dbContext.Chats.FirstOrDefaultAsync(c => c.ChatId == chatId);
+
+                            _dbContext.Chats.Remove(chat);
+                            await _dbContext.SaveChangesAsync();
+                            response = Ok(Messages.Chat.Deleted[language]);
+                        }
+                    }
                 }
             }
-            catch (DbUpdateException ex)
+            catch (Exception ex)
             {
                 response = BadRequest(ex.Message);
             }
@@ -304,10 +321,6 @@ namespace C_Chat_API.Controllers
                         }
                     }
                 }
-            }
-            catch (FormatException)
-            {
-                response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
             }
             catch (Exception ex)
             {

@@ -5,8 +5,6 @@ using C_Chat_API.Models.Dto;
 using C_Chat_API.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
-using System.Text.Json;
 using Microsoft.IdentityModel.Tokens;
 
 namespace C_Chat_API.Controllers
@@ -319,65 +317,6 @@ namespace C_Chat_API.Controllers
 
                             response = Ok(Messages.UserChat.ChatLeaved[language]);
                         }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                response = BadRequest(ex.Message);
-            }
-            return response;
-        }
-
-        /* ---------- OTHER ---------- */
-
-        [HttpGet("test")]
-        public async Task<IActionResult> GetChatsWithItsUsers()
-        {
-            IActionResult response;
-            try
-            {
-                int? userId = await ControllerHelper.GetUserIdFromClaims(User);
-                if (userId == null)
-                {
-                    response = BadRequest(Messages.Form.InvalidOrNotFoundToken);
-                }
-                else
-                {
-                    User? user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
-                    if (user == null)
-                    {
-                        response = NotFound(Messages.User.NotFound);
-                    }
-                    else
-                    {
-                        /*
-                         Console.WriteLine(userId);
-                        var chats = await _dbContext.UserChats
-                            .Where(uc => uc.User.UserId == userId)
-                            .Include(c => c.Chat.UsersChats)
-                            .Select(uc => uc.Chat)
-                            .ToListAsync();
-                        response = Ok(chats);
-                         */
-                        // Configurar opciones de serialización JSON para manejar referencias circulares
-                        var options = new JsonSerializerOptions
-                        {
-                            ReferenceHandler = ReferenceHandler.Preserve
-                        };
-
-                        var chats = await _dbContext.UserChats
-                            .Where(uc => uc.User.UserId == userId)
-                            .Include(c => c.Chat.UsersChats) // Incluir los UserChat asociados a cada Chat
-                            .Include(uc => uc.Chat.Messages)  // Incluir los Messages asociados a cada Chat
-                            .Select(uc => uc.Chat)             // Proyectar el resultado al tipo Chat
-                            .ToListAsync();
-
-                        // Serializar la lista de chats con las opciones configuradas
-                        var json = JsonSerializer.Serialize(chats, options);
-
-                        // Devolver la respuesta
-                        response = Ok(json);
                     }
                 }
             }

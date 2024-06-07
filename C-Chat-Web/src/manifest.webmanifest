@@ -1,6 +1,6 @@
 {
-  "name": "C-Chat-Web",
-  "short_name": "C-Chat-Web",
+  "name": "C-Chat-web",
+  "short_name": "C-Chat",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

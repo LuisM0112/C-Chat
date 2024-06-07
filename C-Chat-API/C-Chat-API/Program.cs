@@ -1,5 +1,6 @@
 using C_Chat_API.Models;
 using C_Chat_API.Services;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -11,7 +12,20 @@ public class Program
         Directory.SetCurrentDirectory(AppContext.BaseDirectory);
         Directory.CreateDirectory("wwwroot");
 
+        String policyName = "_myAllowSpecificOrigins";
+
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(name: policyName, builder =>
+            {
+                builder.WithOrigins("https://c-chat-omega.vercel.app")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
 
         // Add services to the container.
 
@@ -32,12 +46,11 @@ public class Program
             Console.WriteLine(ex.Message);
         }
 
-        // builder.Services.AddScoped<ChatContext>();
-
         builder.Services.AddAuthentication()
                         .AddJwtBearer(options =>
                         {
-                            string key = Environment.GetEnvironmentVariable("JWT_KEY");
+                            // string key = Environment.GetEnvironmentVariable("JWT_KEY");
+                            string key = (string)builder.Configuration.GetValue(typeof(string),"JWT_KEY");
 
                             options.TokenValidationParameters = new TokenValidationParameters()
                             {
@@ -65,29 +78,51 @@ public class Program
             }
         }
 
+        app.UseExceptionHandler(errorApp =>
+        {
+            errorApp.Run(async context =>
+            {
+                context.Response.StatusCode = 500;
+                context.Response.ContentType = "application/json";
+
+                var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                if (contextFeature != null)
+                {
+                    var errorDetails = new
+                    {
+                        StatusCode = context.Response.StatusCode,
+                        Message = "Internal Server Error.",
+                        Detailed = contextFeature.Error.Message
+                    };
+
+                    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(contextFeature.Error, "An unhandled exception occurred.");
+
+                    await context.Response.WriteAsJsonAsync(errorDetails);
+                }
+            });
+        });
+
         // Configure the HTTP request pipeline.
         // if (app.Environment.IsDevelopment())
         // {
         app.UseSwagger();
         app.UseSwaggerUI();
-        
-        app.UseCors(config => config
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .SetIsOriginAllowed(origin => true)
-                        .AllowCredentials());
-        
+
+
         // }
 
         app.UseHttpsRedirection();
-        app.UseWebSockets();
+        app.UseStaticFiles();
+
+        app.UseCors(policyName);
 
         app.UseAuthentication();
         app.UseAuthorization();
+        app.UseWebSockets();
 
         app.MapControllers();
 
-        app.UseStaticFiles();
 
         await app.RunAsync();
     }

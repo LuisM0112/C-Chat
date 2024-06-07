@@ -75,10 +75,6 @@ namespace C_Chat_API.Controllers
                     }
                 }
             }
-            catch (FormatException)
-            {
-                response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
-            }
             catch (Exception ex)
             {
                 response = BadRequest(ex.Message);
@@ -161,10 +157,6 @@ namespace C_Chat_API.Controllers
                     }
                 }
             }
-            catch (FormatException)
-            {
-                response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
-            }
             catch (DbUpdateException ex)
             {
                 response = ControllerHelper.HandleDbUpdateException(ex, language, false);
@@ -227,10 +219,6 @@ namespace C_Chat_API.Controllers
                         }
                     }
                 }
-            }
-            catch (FormatException)
-            {
-                response = BadRequest(Messages.Form.InvalidOrNotFoundToken[language]);
             }
             catch (Exception ex)
             {

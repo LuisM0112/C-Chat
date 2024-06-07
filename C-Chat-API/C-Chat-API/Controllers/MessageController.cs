@@ -2,12 +2,14 @@
 using C_Chat_API.Models;
 using C_Chat_API.Models.Dto;
 using C_Chat_API.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace C_Chat_API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "ADMIN")]
     [ApiController]
     public class MessageController : ControllerBase
     {

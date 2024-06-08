@@ -199,6 +199,7 @@ export class CChatService {
 
   public logOut(): void {
     this.isUserLogged = false;
+    this.isUserAdmin = false;
     this.chatList.set([]);
     this.selectedChat.set(new Chat);
     this.memberList.set([]);

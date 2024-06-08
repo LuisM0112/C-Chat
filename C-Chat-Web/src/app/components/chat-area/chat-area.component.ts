@@ -71,7 +71,7 @@ export class ChatAreaComponent implements OnDestroy{
   }
 
   public sendMessage(): void {
-    if (this.inputText.trim() !== '') {
+    if (this.selectedChat.name && this.inputText.trim() !== '') {
       this.webSocketService.sendMessage(this.inputText);
       this.inputText = '';
       this.scrollToBottom();

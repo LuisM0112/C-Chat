@@ -16,7 +16,7 @@
     <div class="message-container {{cchatService.userName == message.author ? 'self' : 'other'}}">
       <div class="message">
         <span class="message-info">
-          {{message.author}} - {{message.date.slice(8, 17)}}
+          {{message.author}} - {{message.date.slice(10)}}
         </span>
         <span class="message-content">
           {{message.content}}

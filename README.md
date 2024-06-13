@@ -6,20 +6,20 @@
   <em>Aplicación de mensajería similar a WhatsApp o Discord
     <br> Hecho con C# y Typescript</em>
   <br>
-</p>
-
-<p align="center">
   <a href="https://c-chat-omega.vercel.app"><strong>App Web</strong></a><br>
   <a href="https://aromatic-tray-733.notion.site/Anteproyecto-C-Chat-0ca065f5e301446fb2b774a35fcd57ec?pvs=4"><strong>Anteproyecto</strong></a>
-  <br><br>
-  <strong>Vídeo checkpoint</strong><br>
-  <a href="https://youtu.be/orXuOVBVp4I"><img src="https://img.youtube.com/vi/orXuOVBVp4I/hqdefault.jpg" /></a>
 </p>
 
 <h2 align="center">Autor</h2>
 <p align="center">
   <img src="https://github.com/LuisM0112.png?size=150" alt="autor" /><br>
   Luis Miguel García Sevilla - 2º DAM Tarde
+</p>
+
+<p align="center">
+  <br><br>
+  <strong>Vídeo presentación</strong><br>
+  <a href="https://www.youtube.com/watch?v=3qTKHDaY6Wc"><img src="https://img.youtube.com/vi/3qTKHDaY6Wc/hqdefault.jpg" /></a>
 </p>
 
 ---
@@ -59,19 +59,51 @@
   </tr>
 </table>
 
+<details align="center">
+  <summary><h2>Tutorial de la app</h2></summary>
+  <h3>Inicio de sesión</h3>
+  <img src="images/tutorial/C-Chat_Login.webp" alt="Inicio-de-sesion" />
+  <h3>Registro</h3>
+  <img src="images/tutorial/C-Chat_Signup.webp" alt="Registro" />
+  <h3>Vista principal</h3>
+  <img src="images/tutorial/C-Chat_MainView.webp" alt="Vista-principal" />
+  <h3>Crear chat</h3>
+  <img src="images/tutorial/C-Chat_CreateChat.webp" alt="Crear-un-chat" />
+  <h3>Vista chat</h3>
+  <img src="images/tutorial/C-Chat_Chat.webp" alt="Vista-de-chat" />
+  <h3>Enviar un mensaje</h3>
+  <img src="images/tutorial/C-Chat_MessageExample.webp" alt="Ejemplo-de-enviar-mensaje" />
+  <h3>Añadir un usuario</h3>
+  <img src="images/tutorial/C-Chat_AddUser.webp" alt="Añadir-un-usuario" />
+  <h3>Vista lista de usuario</h3>
+  <img src="images/tutorial/C-Chat_UserView.webp" alt="Vista-lista-usuarios" />
+  <h3>Abandonar un chat</h3>
+  <img src="images/tutorial/C-Chat_LeaveChat.webp" alt="Abandonar-un-chat" />
+  <h3>Borrar un chat</h3>
+  <img src="images/tutorial/C-Chat_DeleteChat.webp" alt="Borrar-un-chat" />
+  <h3>Eliminar la cuenta</h3>
+  <img src="images/tutorial/C-Chat_DeleteAccount.webp" alt="Eliminar-la-cuenta" />
+</details>
+
+<p align="center">
+  <br><br>
+  <strong>Vídeo checkpoint</strong><br>
+  <a href="https://youtu.be/orXuOVBVp4I"><img src="https://img.youtube.com/vi/orXuOVBVp4I/hqdefault.jpg" /></a>
+</p>
+
 <h2 align="center">
   Boceto de la vista principal
-  <img src="images/C-Chat_sketch.webp" alt="Boceto-vista-principal" />
+  <img src="images/sketch/C-Chat_sketch.webp" alt="Boceto-vista-principal" />
 </h2>
 
 <h2 align="center">
   Diagrama de la base de datos
-  <img src="images/C-Chat_DBD.webp" alt="Diagrama-base-de-datos" />
+  <img src="images/sketch/C-Chat_DBD.webp" alt="Diagrama-base-de-datos" />
 </h2>
 
 <h2 align="center">
   Diagrama de flujo de la app
-  <img src="images/C-Chat_Flowchart.webp" alt="Diagrama-de-flujo-de-la-app" />
+  <img src="images/sketch/C-Chat_Flowchart.webp" alt="Diagrama-de-flujo-de-la-app" />
 </h2>
 
 # Historico
@@ -154,6 +186,8 @@
   - Cambios en las rutas.
   - Mejoras en la responsividad.
   - Actualización del README.
+- 8 de junio de 2024: Arreglos.
+- 13 de junio de 2024: Arreglo en la fecha del mensaje y acutalización del readme.
 
 ---
 # C-Chat-Web

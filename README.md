@@ -167,6 +167,20 @@ Con Visual Studio abrir la solución "C-Chat-API.sln" que se encuentra en la car
   <a href="https://youtu.be/orXuOVBVp4I"><img src="https://img.youtube.com/vi/orXuOVBVp4I/hqdefault.jpg" /></a>
 </p>
 
+<h2 align="center">Mockup</h2>
+<p align="center">
+  <a href="https://excalidraw.com/#json=2LjiXl8pBAEe9dwcNCRDI,ETgh8gJiP7tkBW2TY702eA">
+    <img src="files/images/Mockup_C-Chat.webp" />
+  </a>
+  🔗<a href="https://excalidraw.com/#json=2LjiXl8pBAEe9dwcNCRDI,ETgh8gJiP7tkBW2TY702eA">Mockup de la interfaz</a><br>
+</p>
+
+<p>
+  La interfaz utiliza la fuente <a href="https://fonts.google.com/specimen/Fira+Code"><strong>Fira Code</strong></a> la cual es una fuente mono espaciada (todos los caracteres ocupan lo mismo) y tiene ligaduras de caracteres, es decir que se pueden combinar caracteres para "crear" otros, por ejemplo esta combinación de caracteres "->" se combinarán para formar algo similar a esta flecha "→", permitiendo elaborar mensajes más estéticos.<br><br>
+  Por otra parte los colores de la aplicación son planos y con contraste entre los distintos apartados y con el texto, dando legibilidad a la interfaz.<br><br>
+  Finalmente los botones por los que el usuario tiene "preferencia" para pulsar, son de un color verde que los resalta y siempre están colocados a la izquierda. Esto es así para evitar posibles accidentes por pulsar un boton que no era el deseado, ejecutando una acción irrebersible.
+</p>
+
 <h2 align="center">
   Boceto de la vista principal
   <img src="files/images/sketch/C-Chat_sketch.webp" alt="Boceto-vista-principal" />
@@ -263,7 +277,11 @@ Con Visual Studio abrir la solución "C-Chat-API.sln" que se encuentra en la car
   - Mejoras en la responsividad.
   - Actualización del README.
 - 8 de junio de 2024: Arreglos.
-- 13 de junio de 2024: Arreglo en la fecha del mensaje y acutalización del readme.
+- 13 de junio de 2024: Arreglo en la fecha del mensaje y actualización del README.
+- 14 de junio de 2024:
+  - Agregados: informe y Mockup.
+  - Reestructuración de archivos del README.
+  - Actualización del README.
 
 ---
 

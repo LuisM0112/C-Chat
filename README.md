@@ -7,7 +7,7 @@
     <br> Hecho con C# y Typescript</em>
   <br><br>
   🔗<a href="https://c-chat-omega.vercel.app"><strong>App desplegada</strong></a><br><br>
-  📁<a href="files/C-Chat.apk" download><strong>Descargar archivo APK</strong></a><br><br>
+  📁<a href="https://github.com/LuisM0112/C-Chat/releases/download/1.0/C-Chat.apk"><strong>Descargar archivo APK</strong></a><br><br>
   🔗<a href="https://aromatic-tray-733.notion.site/Anteproyecto-C-Chat-0ca065f5e301446fb2b774a35fcd57ec?pvs=4"><strong>Anteproyecto</strong></a>
 </p>
 

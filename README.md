@@ -6,10 +6,7 @@
   <em>Aplicación de mensajería similar a WhatsApp o Discord
     <br> Hecho con C# y Typescript</em>
   <br><br>
-  🔗<a href="https://c-chat-omega.vercel.app"><strong>App desplegada</strong></a><br><br>
-  🔗<a href="https://aromatic-tray-733.notion.site/Anteproyecto-C-Chat-0ca065f5e301446fb2b774a35fcd57ec?pvs=4"><strong>Anteproyecto</strong></a><br><br>
   📁<a href="https://github.com/LuisM0112/C-Chat/releases/download/1.0/C-Chat.apk"><strong>Descargar archivo APK</strong></a><br><br>
-  📄<a href="https://github.com/LuisM0112/C-Chat/releases/download/1.0/Informe_C-Chat.pbix"><strong>Descargar informe</strong></a>
 </p>
 
 <h2 align="center">Autor</h2>
@@ -63,10 +60,15 @@ Con este proyecto pretendo explotar los conocimientos adquiridos en lenguajes co
 </p>
 
 ## Instalación
-Abrir el CMD o Bash y clonar el repositorio con el comando `git clone https://github.com/LuisM0112/C-Chat.git`
+
+- Abrir el CMD o Bash y clonar el repositorio con el comando `git clone https://github.com/LuisM0112/C-Chat.git`
+- En la raiz del repositorio ejecutar el comando `docker build -t db-cchat-img .` para construir la imagen para la base de datos y el comando `docker run -d -p 3306:3306 --name db-cchat db-cchat-img` para ejecutar el contenedor
+
 ### Web
 
 Proyecto creado con [Angular CLI](https://github.com/angular/angular-cli) versión 18.0.1.
+
+En la ruta [C-Chat\C-Chat-Web](/C-Chat-Web)
 
 #### Servidor de desarrollo
 
@@ -79,9 +81,11 @@ Ejecuta el comando `ng build` para compilar el proyecto. Los archivos se almacen
 #### Servidor de producción
 
 Ejecuta el comando `npx http-server -p 8080 -c-1 dist/c-chat-web/browser` para lanzar un servidor HTTP en la ruta `http://localhost:8080/`. Pudiendo así hacer uso de la PWA.
+
 ### API
 Con Visual Studio abrir la solución "C-Chat-API.sln" que se encuentra en la carpeta [C-Chat\C-Chat-API](/C-Chat-API/) y ejecutar el proyecto con HTTPS.
-
+#### Desde consola
+En la ruta [C-Chat\C-Chat-API\C-Chat-API](/C-Chat-API/C-Chat-API) ejecutar el comando `dotnet run`
 
 <details align="center">
   <summary><h2>Tutorial de la app</h2></summary>
@@ -155,23 +159,10 @@ Con Visual Studio abrir la solución "C-Chat-API.sln" que se encuentra en la car
   </p>
 </details>
 
-<p align="center">
-  <br><br>
-  <strong>Vídeo presentación</strong><br>
-  <a href="https://www.youtube.com/watch?v=3qTKHDaY6Wc"><img src="https://img.youtube.com/vi/3qTKHDaY6Wc/hqdefault.jpg" /></a><br>
-  📄<a href="files/C-CHAT_Presentacion.pdf">Presentacion PDF</a>
-</p>
-
-<p align="center">
-  <br><br>
-  <strong>Vídeo checkpoint</strong><br>
-  <a href="https://youtu.be/orXuOVBVp4I"><img src="https://img.youtube.com/vi/orXuOVBVp4I/hqdefault.jpg" /></a>
-</p>
-
 <h2 align="center">Mockup</h2>
 <p align="center">
   <a href="https://excalidraw.com/#json=2LjiXl8pBAEe9dwcNCRDI,ETgh8gJiP7tkBW2TY702eA">
-    <img src="files/images/Mockup_C-Chat.webp" />
+    <img src="files/images/sketch/Mockup_C-Chat.webp" />
   </a>
   🔗<a href="https://excalidraw.com/#json=2LjiXl8pBAEe9dwcNCRDI,ETgh8gJiP7tkBW2TY702eA">Mockup de la interfaz</a><br>
 </p>
@@ -183,18 +174,8 @@ Con Visual Studio abrir la solución "C-Chat-API.sln" que se encuentra en la car
 </p>
 
 <h2 align="center">
-  Boceto de la vista principal
-  <img src="files/images/sketch/C-Chat_sketch.webp" alt="Boceto-vista-principal" />
-</h2>
-
-<h2 align="center">
   Diagrama de la base de datos
   <img src="files/images/sketch/C-Chat_DBD.webp" alt="Diagrama-base-de-datos" />
-</h2>
-
-<h2 align="center">
-  Diagrama de flujo de la app
-  <img src="files/images/sketch/C-Chat_Flowchart.webp" alt="Diagrama-de-flujo-de-la-app" />
 </h2>
 
 # Historico
@@ -283,6 +264,7 @@ Con Visual Studio abrir la solución "C-Chat-API.sln" que se encuentra en la car
   - Agregados: informe y Mockup.
   - Reestructuración de archivos del README.
   - Actualización del README.
+- 5 de julio de 2024: Cierre del despliegue de la app y cambios para publicación del repositorio.
 
 ---
 

@@ -1,0 +1,4 @@
+CREATE DATABASE IF NOT EXISTS `db-cchat`;
+CREATE USER IF NOT EXISTS 'aspuser'@'%' IDENTIFIED BY 'cchatdbpw';
+GRANT ALL PRIVILEGES ON `db-cchat`.* TO 'aspuser'@'%';
+FLUSH PRIVILEGES;

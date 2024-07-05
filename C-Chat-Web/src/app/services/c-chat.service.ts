@@ -5,10 +5,10 @@ import { Chat } from '../model/classes/chat';
 import { UserChatInsert } from '../model/classes/user-chat-insert';
 import { User } from '../model/classes/user';
 import { ToastrService } from 'ngx-toastr';
-import * as strings from "../../assets/data/strings.json";
+import * as strings from '../../assets/data/strings.json';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CChatService {
   strings: any = strings;
@@ -16,28 +16,29 @@ export class CChatService {
   private TOKEN_ITEM: string = 'C-ChatToken';
   private USER_ITEM: string = 'C-ChatUserName';
   private LANGUAGE_ITEM: string = 'C-ChatLanguage';
-  private API_URL: string = 'https://c-chat.runasp.net/api';
-  
+  private API_URL: string = 'https://localhost:7201/api';
+
   isUserLogged: boolean = localStorage.getItem(this.TOKEN_ITEM) ? true : false;
   isUserAdmin: boolean = false;
-  
+
   chatList: WritableSignal<Chat[]> = signal([]);
-  selectedChat: WritableSignal<Chat> = signal(new Chat);
+  selectedChat: WritableSignal<Chat> = signal(new Chat());
   memberList: WritableSignal<User[]> = signal([]);
-  
+
   private language: string;
   public userName: string;
 
   constructor(private httpClient: HttpClient, private toastr: ToastrService) {
-    this.language = localStorage.getItem(this.LANGUAGE_ITEM) ?? this.getDefaultLanguage(); // By default takes browser preferred language
+    this.language =
+      localStorage.getItem(this.LANGUAGE_ITEM) ?? this.getDefaultLanguage(); // By default takes browser preferred language
     this.userName = localStorage.getItem(this.USER_ITEM) ?? '';
   }
-  
+
   /* |---------- Utility ----------| */
   private getDefaultLanguage(): string {
-    const navLang: string = navigator.language.split("-")[0];
-    const supportedLanguages: Set<string> = new Set(["es", "en"]);
-    return supportedLanguages.has(navLang) ? navLang : "en";
+    const navLang: string = navigator.language.split('-')[0];
+    const supportedLanguages: Set<string> = new Set(['es', 'en']);
+    return supportedLanguages.has(navLang) ? navLang : 'en';
   }
 
   public getLanguage(): string {
@@ -51,13 +52,13 @@ export class CChatService {
 
   public getOptions(): any {
     const token = localStorage.getItem(this.TOKEN_ITEM);
-    return ({
+    return {
       headers: new HttpHeaders({
         Accept: 'text/html, application/xhtml+xml, */*',
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       }),
       responseType: 'text',
-    });
+    };
   }
 
   public toggleModalForm(selector: string, open: boolean): void {
@@ -66,7 +67,9 @@ export class CChatService {
   }
 
   public getListFiltered(list: any[], filter: string): any[] {
-    return filter ? list.filter(item => item.name.toLowerCase().includes(filter)) : list;
+    return filter
+      ? list.filter((item) => item.name.toLowerCase().includes(filter))
+      : list;
   }
 
   /* |---------- Get ----------| */
@@ -74,9 +77,9 @@ export class CChatService {
   public async getUsers(): Promise<User[]> {
     const token = localStorage.getItem(this.TOKEN_ITEM);
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const request = this.httpClient.get<boolean>(`${this.API_URL}/${this.language}/Auth`, { headers }).pipe(
-      map((response: any) => response.map(this.mapToUser))
-    );
+    const request = this.httpClient
+      .get<boolean>(`${this.API_URL}/${this.language}/Auth`, { headers })
+      .pipe(map((response: any) => response.map(this.mapToUser)));
     const users: User[] = await lastValueFrom(request);
     return users;
   }
@@ -84,27 +87,30 @@ export class CChatService {
   public async getChats(): Promise<Chat[]> {
     const token = localStorage.getItem(this.TOKEN_ITEM);
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const request = this.httpClient.get<boolean>(`${this.API_URL}/${this.language}/Chat`, { headers }).pipe(
-      map((response: any) => response.map(this.mapToChat))
-    );
+    const request = this.httpClient
+      .get<boolean>(`${this.API_URL}/${this.language}/Chat`, { headers })
+      .pipe(map((response: any) => response.map(this.mapToChat)));
     const chats: Chat[] = await lastValueFrom(request);
     return chats;
   }
 
   public async getAmIAdmin(): Promise<void> {
-    const request = this.httpClient.get<boolean>(`${this.API_URL}/${this.language}/Auth/AmIAdmin`, this.getOptions());
+    const request = this.httpClient.get<boolean>(
+      `${this.API_URL}/${this.language}/Auth/AmIAdmin`,
+      this.getOptions()
+    );
     const response: any = await lastValueFrom(request);
-    
+
     this.isUserAdmin = response == 'true' ? true : false;
   }
 
   public async getUserChatList(): Promise<void> {
     const token = localStorage.getItem(this.TOKEN_ITEM);
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    const request = this.httpClient.get(`${this.API_URL}/${this.language}/Chat/MyChats`, { headers }).pipe(
-      map((response: any) => response.map(this.mapToChat))
-    );
-    
+    const request = this.httpClient
+      .get(`${this.API_URL}/${this.language}/Chat/MyChats`, { headers })
+      .pipe(map((response: any) => response.map(this.mapToChat)));
+
     const chats: Chat[] = await lastValueFrom(request);
 
     this.chatList.set(chats);
@@ -114,29 +120,34 @@ export class CChatService {
     return {
       chatId: item.chatId,
       name: item.name,
-      creationDate: item.creationDate
-    }
+      creationDate: item.creationDate,
+    };
   }
 
   public async getUsersInChat(): Promise<void> {
     const token = localStorage.getItem(this.TOKEN_ITEM);
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const chatId = this.selectedChat().chatId;
-    const request = this.httpClient.get(`${this.API_URL}/${this.language}/Chat/UsersInChat/${chatId}`, { headers }).pipe(
-      map((response: any) => response.map(this.mapToUser))
-    );
+    const request = this.httpClient
+      .get(`${this.API_URL}/${this.language}/Chat/UsersInChat/${chatId}`, {
+        headers,
+      })
+      .pipe(map((response: any) => response.map(this.mapToUser)));
     const users: User[] = await lastValueFrom(request);
     this.memberList.set(users);
   }
   private mapToUser(item: any): User {
     return {
       name: item.name,
-      email: item.email
-    }
+      email: item.email,
+    };
   }
 
   public async getUserData(): Promise<void> {
-    const request = this.httpClient.get<string>(`${this.API_URL}/${this.language}/Auth/UserData`, this.getOptions());
+    const request = this.httpClient.get<string>(
+      `${this.API_URL}/${this.language}/Auth/UserData`,
+      this.getOptions()
+    );
     const response: any = await lastValueFrom(request);
     this.userName = response;
     localStorage.setItem(this.USER_ITEM, response);
@@ -151,10 +162,17 @@ export class CChatService {
     formData.append('Password', userData.password);
     formData.append('PasswordBis', userData.passwordBis);
 
-    const request = this.httpClient.post<string>(`${this.API_URL}/${this.language}/Auth/SignUp`, formData, this.getOptions());
+    const request = this.httpClient.post<string>(
+      `${this.API_URL}/${this.language}/Auth/SignUp`,
+      formData,
+      this.getOptions()
+    );
     const response: any = await lastValueFrom(request);
     this.toastr.success(response);
-    await this.postLogIn({ email: userData.email, password: userData.password })
+    await this.postLogIn({
+      email: userData.email,
+      password: userData.password,
+    });
     return response;
   }
 
@@ -163,9 +181,13 @@ export class CChatService {
     formData.append('Email', userData.email);
     formData.append('Password', userData.password);
 
-    const request = this.httpClient.post<string>(`${this.API_URL}/${this.language}/Auth/Login`, formData, this.getOptions());
+    const request = this.httpClient.post<string>(
+      `${this.API_URL}/${this.language}/Auth/Login`,
+      formData,
+      this.getOptions()
+    );
     const response: any = await lastValueFrom(request);
-    
+
     this.isUserLogged = true;
     localStorage.setItem(this.TOKEN_ITEM, response);
     await this.getUserData();
@@ -177,7 +199,11 @@ export class CChatService {
     const formData = new FormData();
     formData.append('Name', chatName);
 
-    const request = this.httpClient.post<string>(`${this.API_URL}/${this.language}/Chat`, formData, this.getOptions());
+    const request = this.httpClient.post<string>(
+      `${this.API_URL}/${this.language}/Chat`,
+      formData,
+      this.getOptions()
+    );
     const response: any = await lastValueFrom(request);
     await this.getUserChatList();
     this.toastr.success(response);
@@ -188,7 +214,11 @@ export class CChatService {
     formData.append('ChatId', userToAdd.chatId);
     formData.append('UserName', userToAdd.userName);
 
-    const request = this.httpClient.post<string>(`${this.API_URL}/${this.language}/Chat/AddUserToChat`, formData, this.getOptions());
+    const request = this.httpClient.post<string>(
+      `${this.API_URL}/${this.language}/Chat/AddUserToChat`,
+      formData,
+      this.getOptions()
+    );
     const response: any = await lastValueFrom(request);
 
     this.toastr.success(response);
@@ -201,7 +231,7 @@ export class CChatService {
     this.isUserLogged = false;
     this.isUserAdmin = false;
     this.chatList.set([]);
-    this.selectedChat.set(new Chat);
+    this.selectedChat.set(new Chat());
     this.memberList.set([]);
     this.userName = '';
     localStorage.removeItem(this.TOKEN_ITEM);
@@ -209,7 +239,10 @@ export class CChatService {
   }
 
   public async deleteUser(): Promise<void> {
-    const request = this.httpClient.delete<string>(`${this.API_URL}/${this.language}/Auth`, this.getOptions());
+    const request = this.httpClient.delete<string>(
+      `${this.API_URL}/${this.language}/Auth`,
+      this.getOptions()
+    );
     const response: any = await lastValueFrom(request);
     this.logOut();
     this.toastr.info(response);
@@ -217,19 +250,24 @@ export class CChatService {
 
   public async deleteLeaveChat(): Promise<void> {
     const chatId = this.selectedChat().chatId;
-    const request = this.httpClient.delete<string>(`${this.API_URL}/${this.language}/Chat/LeaveChat/${chatId}`, this.getOptions());
+    const request = this.httpClient.delete<string>(
+      `${this.API_URL}/${this.language}/Chat/LeaveChat/${chatId}`,
+      this.getOptions()
+    );
     const response: any = await lastValueFrom(request);
     await this.getUserChatList();
-    this.selectedChat.set(new Chat);
+    this.selectedChat.set(new Chat());
     this.toastr.info(response);
   }
 
   public async deleteChat(chatId: number): Promise<void> {
-    const request = this.httpClient.delete<string>(`${this.API_URL}/${this.language}/Chat/${chatId}`, this.getOptions());
+    const request = this.httpClient.delete<string>(
+      `${this.API_URL}/${this.language}/Chat/${chatId}`,
+      this.getOptions()
+    );
     const response: any = await lastValueFrom(request);
     await this.getUserChatList();
-    this.selectedChat.set(new Chat);
+    this.selectedChat.set(new Chat());
     this.toastr.info(response);
   }
-
 }

@@ -2,39 +2,40 @@ import { Injectable, WritableSignal, signal } from '@angular/core';
 import { Message } from '../model/classes/message';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WebSocketService {
-
-  private API_URL: string = 'https://c-chat.runasp.net';
+  private API_URL: string = 'https://localhost:7201';
   private TOKEN_ITEM: string = 'C-ChatToken';
   private socket!: WebSocket;
-  public message: WritableSignal<Message> = signal(new Message("","","",""));
+  public message: WritableSignal<Message> = signal(new Message('', '', '', ''));
 
-  constructor() { }
+  constructor() {}
 
   public connect(chatId: number): void {
     const token = localStorage.getItem(this.TOKEN_ITEM);
-    this.socket = new WebSocket(`${this.API_URL}/ws?chatId=${chatId}&jwt=${token}`);
+    this.socket = new WebSocket(
+      `${this.API_URL}/ws?chatId=${chatId}&jwt=${token}`
+    );
 
     this.socket.onopen = () => {
       console.log('WebSocket connection established');
     };
 
     this.socket.onmessage = (event) => {
-      const messageStr: string[] = event.data.split("¨");
-      
+      const messageStr: string[] = event.data.split('¨');
+
       const message: Message = new Message(
         messageStr[0], // <-- author
         messageStr[1], // <-- chat name
         messageStr[2], // <-- date
-        messageStr[3]  // <-- content
+        messageStr[3] // <-- content
       );
       this.message.set(message);
     };
 
     this.socket.onclose = () => {
-      this.message.set(new Message("","","",""));
+      this.message.set(new Message('', '', '', ''));
       console.log('WebSocket connection closed');
     };
   }
